@@ -1,0 +1,308 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Helpers = void 0;
+var Timeline;
+(function (Timeline) {
+    Timeline["_1m"] = "1m";
+    Timeline["_3m"] = "3m";
+    Timeline["_6m"] = "6m";
+    Timeline["_1y"] = "1y";
+    Timeline["all"] = "all";
+})(Timeline || (Timeline = {}));
+class Helpers {
+    /**
+     * Generates a random OTP (One-Time Password)
+     * @param options Configuration options for OTP generation
+     * @returns Generated OTP string
+     */
+    static generateOTP({ length = 6, options = {
+        numbers: true,
+        uppercase: false,
+        lowercase: false,
+    }, }) {
+        const { numbers, uppercase, lowercase } = options;
+        let characters = "";
+        if (numbers)
+            characters += "0123456789";
+        if (uppercase)
+            characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        if (lowercase)
+            characters += "abcdefghijklmnopqrstuvwxyz";
+        if (!characters) {
+            throw new Error("At least one character type must be enabled.");
+        }
+        let otp = "";
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            otp += characters[randomIndex];
+        }
+        return otp;
+    }
+    /**
+     * Generates a future timestamp based on the given number of seconds
+     * @param seconds Number of seconds to add to current time
+     * @returns Future Date object
+     */
+    static getFutureTimestamp({ seconds }) {
+        const now = new Date();
+        return new Date(now.getTime() + seconds * 1000);
+    }
+    /**
+     * Generates a unique value with a prefix
+     * @param value Base value to generate unique identifier from
+     * @returns Unique string with prefix
+     */
+    static generateUniqueValue(value) {
+        const prefix = value.slice(0, 3).toUpperCase();
+        const timestamp = Date.now().toString(36);
+        const random = Math.random().toString(36).substring(2, 8);
+        return `${prefix}-${timestamp}-${random}`;
+    }
+    /**
+     * Validates an email address format
+     * @param email Email address to validate
+     * @returns boolean indicating if email is valid
+     */
+    static isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    /**
+     * Formats a phone number to a standard format
+     * @param phone Phone number to format
+     * @returns Formatted phone number
+     */
+    static formatPhoneNumber(phone) {
+        // Remove all non-numeric characters
+        const cleaned = phone.replace(/\D/g, "");
+        // Format based on length
+        if (cleaned.length === 10) {
+            return `+1${cleaned}`;
+        }
+        else if (cleaned.length === 11 && cleaned.startsWith("1")) {
+            return `+${cleaned}`;
+        }
+        return `+${cleaned}`;
+    }
+    /**
+     * Generates a random password with specified requirements
+     * @param length Length of the password
+     * @returns Generated password
+     */
+    static generatePassword(length = 12) {
+        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const lowercase = "abcdefghijklmnopqrstuvwxyz";
+        const numbers = "0123456789";
+        const symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+        const allChars = uppercase + lowercase + numbers + symbols;
+        let password = "";
+        // Ensure at least one of each type
+        password += uppercase[Math.floor(Math.random() * uppercase.length)];
+        password += lowercase[Math.floor(Math.random() * lowercase.length)];
+        password += numbers[Math.floor(Math.random() * numbers.length)];
+        password += symbols[Math.floor(Math.random() * symbols.length)];
+        // Fill the rest randomly
+        for (let i = password.length; i < length; i++) {
+            password += allChars[Math.floor(Math.random() * allChars.length)];
+        }
+        // Shuffle the password
+        return password
+            .split("")
+            .sort(() => Math.random() - 0.5)
+            .join("");
+    }
+    /**
+     * Sanitizes a string by removing potentially harmful characters
+     * @param input String to sanitize
+     * @returns Sanitized string
+     */
+    static sanitizeString(input) {
+        return input
+            .replace(/[<>]/g, "") // Remove < and >
+            .replace(/javascript:/gi, "") // Remove javascript: protocol
+            .replace(/on\w+=/gi, "") // Remove on* attributes
+            .trim();
+    }
+    /**
+     * Checks if an object is empty. If so, returns null; otherwise, returns the object
+     */
+    static isEmptyOrNull(obj) {
+        if (obj &&
+            typeof obj === "object" &&
+            !Array.isArray(obj) &&
+            Object.keys(obj).length === 0) {
+            return null;
+        }
+        return obj;
+    }
+    /**
+     * Converts object keys to snake_case recursively, and converts empty objects to null.
+     */
+    static toSnakeCase(obj) {
+        if (Array.isArray(obj)) {
+            return obj.map(Helpers.toSnakeCase);
+        }
+        else if (obj !== null && typeof obj === "object") {
+            const converted = Object.fromEntries(Object.entries(obj).map(([k, v]) => [
+                k.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
+                Helpers.toSnakeCase(v),
+            ]));
+            return Helpers.isEmptyOrNull(converted);
+        }
+        return obj;
+    }
+    /**
+     * Converts object keys to camelCase recursively, and converts empty objects to null.
+     */
+    static toCamelCase(obj) {
+        if (Array.isArray(obj)) {
+            return obj.map(Helpers.toCamelCase);
+        }
+        else if (obj !== null && typeof obj === "object") {
+            const converted = Object.fromEntries(Object.entries(obj).map(([k, v]) => [
+                k.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase()),
+                Helpers.toCamelCase(v),
+            ]));
+            return Helpers.isEmptyOrNull(converted);
+        }
+        return obj;
+    }
+    /**
+     * Generates a unique company reference ID with hyphens.
+     * Format: XX-CCCCCCss-YY
+     * - XX: first 2 letters of company name (uppercase, sanitized)
+     * - CCCCCC: 6 random uppercase alphanumeric
+     * - ss: 2 random lowercase letters
+     * - YY: last 2 digits of current year
+     */
+    static generateReferenceId({ company_name, }) {
+        const namePart = company_name
+            .replace(/[^a-zA-Z0-9]/g, "")
+            .toUpperCase()
+            .slice(0, 2)
+            .padEnd(2, "X");
+        const now = new Date();
+        const yearPart = now.getFullYear().toString().slice(-2);
+        const upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const lowerChars = "abcdefghijklmnopqrstuvwxyz";
+        let randomUpper = "";
+        for (let i = 0; i < 6; i++) {
+            randomUpper += upperChars.charAt(Math.floor(Math.random() * upperChars.length));
+        }
+        let randomLower = "";
+        for (let i = 0; i < 2; i++) {
+            randomLower += lowerChars.charAt(Math.floor(Math.random() * lowerChars.length));
+        }
+        return `${namePart}-${randomUpper}${randomLower}-${yearPart}`;
+    }
+    static generateUserSlug() {
+        // Generate 3 random uppercase letters
+        const letters = Array.from({ length: 3 }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26))).join("");
+        // Generate 4 random digits
+        const digits = Math.floor(1000 + Math.random() * 9000).toString();
+        // Get current date and encode as 4 uppercase letters (e.g., Dec 16, 2025 -> D16Z)
+        // We'll use: 1st letter of month, 2-digit day, last char of year (base36)
+        const now = new Date();
+        const months = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+        const monthLetter = months[now.getMonth()];
+        const day = now.getDate().toString().padStart(2, "0");
+        const yearChar = now.getFullYear().toString(36).toUpperCase().slice(-1); // base36 for variety
+        const datestamp = `${monthLetter}${day}${yearChar}`;
+        return `${letters}-${digits}-${datestamp}`;
+    }
+    static sanitizeUser(user, extraFields = []) {
+        if (!user)
+            return user;
+        const sensitiveFields = ["password", "refresh_token", ...extraFields];
+        const sanitized = { ...user };
+        for (const field of sensitiveFields) {
+            if (field in sanitized) {
+                sanitized[field] = undefined;
+            }
+        }
+        // Always stringify date fields if present
+        const dateFields = ["created_at", "last_login", "updated_at"];
+        for (const field of dateFields) {
+            if (field in sanitized && sanitized[field] != null) {
+                if (typeof sanitized[field] !== "string") {
+                    sanitized[field] = String(sanitized[field]);
+                }
+            }
+        }
+        return sanitized;
+    }
+    static computeTrend(current, previous) {
+        if (previous === 0 && current > 0)
+            return { percentage: 100, trend: "neutral" };
+        if (previous === 0 && current === 0)
+            return { percentage: 0, trend: "neutral" };
+        const diff = current - previous;
+        const pct = previous !== 0 ? (diff / previous) * 100 : 0;
+        let trend = "neutral";
+        if (pct > 0)
+            trend = "increase";
+        else if (pct < 0)
+            trend = "decrease";
+        else if (pct === 0)
+            trend = "neutral";
+        return { percentage: Math.round(pct * 10) / 10, trend };
+    }
+    static getDateRanges({ timeline, start_date, end_date, }) {
+        const now = new Date();
+        let date_from;
+        let date_to;
+        let prev_date_from;
+        let prev_date_to;
+        if (timeline) {
+            switch (timeline) {
+                case Timeline._1m:
+                    date_from = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                    prev_date_from = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
+                    prev_date_to = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                    break;
+                case Timeline._3m:
+                    date_from = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+                    prev_date_from = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+                    prev_date_to = new Date(now.getFullYear(), now.getMonth() - 3, now.getDate());
+                    break;
+                case Timeline._6m:
+                    date_from = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+                    prev_date_from = new Date(now.getFullYear(), now.getMonth() - 12, now.getDate());
+                    prev_date_to = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
+                    break;
+                case Timeline._1y:
+                    date_from = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+                    prev_date_from = new Date(now.getFullYear() - 2, now.getMonth(), now.getDate());
+                    prev_date_to = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+                    break;
+            }
+            date_to = now;
+        }
+        if (start_date)
+            date_from = new Date(start_date);
+        if (end_date)
+            date_to = new Date(end_date);
+        if (start_date && end_date) {
+            const diff = new Date(end_date).getTime() - new Date(start_date).getTime();
+            prev_date_to = new Date(new Date(start_date).getTime());
+            prev_date_from = new Date(new Date(start_date).getTime() - diff);
+        }
+        return { date_from, date_to, prev_date_from, prev_date_to };
+    }
+    static buildWhere(extra = {}, dateRange) {
+        const where = { ...extra };
+        const { date_from, date_to, prev_date_from, prev_date_to, usePrev } = dateRange;
+        const from = usePrev ? prev_date_from : date_from;
+        const to = usePrev ? prev_date_to : date_to;
+        if (from || to) {
+            where.created_at = {};
+            if (from)
+                where.created_at.gte = from;
+            if (to)
+                where.created_at.lte = to;
+        }
+        return where;
+    }
+}
+exports.Helpers = Helpers;
+//# sourceMappingURL=helpers.js.map
