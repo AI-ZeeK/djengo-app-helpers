@@ -1,3 +1,3 @@
 // Re-export helpers and enums for consumers
-export * from "./helpers";
+export { AppHelper } from "./helpers";
 export * from "./enums";
