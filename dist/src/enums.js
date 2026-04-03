@@ -111,6 +111,12 @@ var FILE_ENTITY_TYPE_ENUM;
     FILE_ENTITY_TYPE_ENUM["ORGANIZATION_LOGO"] = "organization_logo";
     FILE_ENTITY_TYPE_ENUM["BUSINESS_LOGO"] = "business_logo";
     FILE_ENTITY_TYPE_ENUM["PLATFORM_USER_AVATAR"] = "platform_user_avatar";
+    FILE_ENTITY_TYPE_ENUM["ADDRESS_PROOF"] = "address_proof";
+    FILE_ENTITY_TYPE_ENUM["IDENTITY_PROOF"] = "identity_proof";
+    FILE_ENTITY_TYPE_ENUM["EMPLOYMENT_CONTRACT"] = "employment_contract";
+    FILE_ENTITY_TYPE_ENUM["TAX_DOCUMENT"] = "tax_document";
+    FILE_ENTITY_TYPE_ENUM["BANK_DETAILS"] = "bank_details";
+    FILE_ENTITY_TYPE_ENUM["RESUME"] = "resume";
 })(FILE_ENTITY_TYPE_ENUM || (exports.FILE_ENTITY_TYPE_ENUM = FILE_ENTITY_TYPE_ENUM = {}));
 /**
  * User roles in the system

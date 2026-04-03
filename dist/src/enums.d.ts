@@ -96,7 +96,13 @@ export declare enum FILE_ENTITY_TYPE_ENUM {
     USER_AVATAR = "user_avatar",
     ORGANIZATION_LOGO = "organization_logo",
     BUSINESS_LOGO = "business_logo",
-    PLATFORM_USER_AVATAR = "platform_user_avatar"
+    PLATFORM_USER_AVATAR = "platform_user_avatar",
+    ADDRESS_PROOF = "address_proof",
+    IDENTITY_PROOF = "identity_proof",
+    EMPLOYMENT_CONTRACT = "employment_contract",
+    TAX_DOCUMENT = "tax_document",
+    BANK_DETAILS = "bank_details",
+    RESUME = "resume"
 }
 /**
  * User roles in the system
