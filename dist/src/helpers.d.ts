@@ -90,5 +90,6 @@ export declare class AppHelper {
         prev_date_to?: Date;
     };
     static buildWhere(extra: any | undefined, dateRange: any): any;
+    static determineFileType(mimetype: string): "image" | "audio" | "video" | "document";
 }
 //# sourceMappingURL=helpers.d.ts.map
