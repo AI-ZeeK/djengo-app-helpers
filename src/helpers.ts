@@ -421,4 +421,29 @@ export class AppHelper {
     }
     return where;
   }
+
+  static determineFileType(
+    mimetype: string,
+  ): "image" | "audio" | "video" | "document" {
+    if (mimetype.startsWith("image/")) return "image";
+    if (mimetype.startsWith("video/")) return "video";
+    if (mimetype.startsWith("audio/")) return "audio";
+    // Common document MIME types
+    const documentTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.ms-excel",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.ms-powerpoint",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "text/plain",
+      "application/rtf",
+      "application/vnd.oasis.opendocument.text",
+      "application/vnd.oasis.opendocument.spreadsheet",
+      "application/vnd.oasis.opendocument.presentation",
+    ];
+    if (documentTypes.includes(mimetype)) return "document";
+    throw new Error("Unsupported file type");
+  }
 }
