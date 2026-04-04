@@ -65,6 +65,8 @@ export enum ROLES_ENUM {
   CLIENT = "CLIENT",
   BRANCH = "BRANCH",
   STAFF = "STAFF",
+  TENANT = "TENANT",
+
   AGENCY = "AGENCY",
   SUPER_ADMIN = "SUPER_ADMIN",
   ADMIN = "ADMIN",
@@ -124,6 +126,7 @@ export enum UserRole {
   CLIENT = "CLIENT",
   BRANCH = "BRANCH",
   STAFF = "STAFF",
+  ESTATE_TENANT = "ESTATE_TENANT",
   AGENCY = "AGENCY",
 }
 
