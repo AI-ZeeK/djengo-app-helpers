@@ -70,6 +70,7 @@ var ROLES_ENUM;
     ROLES_ENUM["CLIENT"] = "CLIENT";
     ROLES_ENUM["BRANCH"] = "BRANCH";
     ROLES_ENUM["STAFF"] = "STAFF";
+    ROLES_ENUM["TENANT"] = "TENANT";
     ROLES_ENUM["AGENCY"] = "AGENCY";
     ROLES_ENUM["SUPER_ADMIN"] = "SUPER_ADMIN";
     ROLES_ENUM["ADMIN"] = "ADMIN";
@@ -129,6 +130,7 @@ var UserRole;
     UserRole["CLIENT"] = "CLIENT";
     UserRole["BRANCH"] = "BRANCH";
     UserRole["STAFF"] = "STAFF";
+    UserRole["ESTATE_TENANT"] = "ESTATE_TENANT";
     UserRole["AGENCY"] = "AGENCY";
 })(UserRole || (exports.UserRole = UserRole = {}));
 //  * Base organization roles
