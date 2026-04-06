@@ -329,6 +329,25 @@ class AppHelper {
             return "document";
         throw new Error("Unsupported file type");
     }
+    static buildQueryUrl(template, params) {
+        let result = template;
+        // Then replace all other parameters
+        for (const [key, value] of Object.entries(params)) {
+            const placeholder = `:${key}`;
+            let stringValue;
+            if (Array.isArray(value)) {
+                stringValue = value.map(String).join(",");
+            }
+            else {
+                stringValue = String(value);
+            }
+            result = result.replace(new RegExp(placeholder, "g"), stringValue);
+        }
+        // Clean up any remaining placeholders (like :param) that weren't replaced
+        // This handles cases where parameters are missing or empty
+        result = result.replace(/:[^\/&\?]+/g, "");
+        return result;
+    }
 }
 exports.AppHelper = AppHelper;
 //# sourceMappingURL=helpers.js.map

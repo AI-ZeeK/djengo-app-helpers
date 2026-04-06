@@ -1,3 +1,7 @@
+type ExtractRouteParams<T extends string> = T extends `${string}:${infer Param}/${infer Rest}` ? Param | ExtractRouteParams<`/${Rest}`> : T extends `${string}:${infer Param}&${infer Rest}` ? Param | ExtractRouteParams<`&${Rest}`> : T extends `${string}:${infer Param}?${infer Rest}` ? Param | ExtractRouteParams<`?${Rest}`> : T extends `${string}:${infer Param}` ? Param : never;
+type RouteParams<T extends string> = {
+    [K in ExtractRouteParams<T>]: string | number | (string | number)[];
+};
 export declare class AppHelper {
     /**
      * Generates a random OTP (One-Time Password)
@@ -91,5 +95,7 @@ export declare class AppHelper {
     };
     static buildWhere(extra: any | undefined, dateRange: any): any;
     static determineFileType(mimetype: string): "image" | "audio" | "video" | "document";
+    static buildQueryUrl<T extends string>(template: T, params: RouteParams<T>): string;
 }
+export {};
 //# sourceMappingURL=helpers.d.ts.map

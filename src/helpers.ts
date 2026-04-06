@@ -5,6 +5,21 @@ enum Timeline {
   _1y = "1y",
   all = "all",
 }
+
+type ExtractRouteParams<T extends string> =
+  T extends `${string}:${infer Param}/${infer Rest}`
+    ? Param | ExtractRouteParams<`/${Rest}`>
+    : T extends `${string}:${infer Param}&${infer Rest}`
+      ? Param | ExtractRouteParams<`&${Rest}`>
+      : T extends `${string}:${infer Param}?${infer Rest}`
+        ? Param | ExtractRouteParams<`?${Rest}`>
+        : T extends `${string}:${infer Param}`
+          ? Param
+          : never;
+
+type RouteParams<T extends string> = {
+  [K in ExtractRouteParams<T>]: string | number | (string | number)[];
+};
 export class AppHelper {
   /**
    * Generates a random OTP (One-Time Password)
@@ -445,5 +460,33 @@ export class AppHelper {
     ];
     if (documentTypes.includes(mimetype)) return "document";
     throw new Error("Unsupported file type");
+  }
+
+  static buildQueryUrl<T extends string>(
+    template: T,
+    params: RouteParams<T>,
+    // params: Record<string, string | number | (string | number)[]>
+  ): string {
+    let result = template;
+
+    // Then replace all other parameters
+    for (const [key, value] of Object.entries(params)) {
+      const placeholder = `:${key}`;
+      let stringValue: string;
+
+      if (Array.isArray(value)) {
+        stringValue = value.map(String).join(",");
+      } else {
+        stringValue = String(value);
+      }
+
+      result = result.replace(new RegExp(placeholder, "g"), stringValue) as T;
+    }
+
+    // Clean up any remaining placeholders (like :param) that weren't replaced
+    // This handles cases where parameters are missing or empty
+    result = result.replace(/:[^\/&\?]+/g, "") as T;
+
+    return result;
   }
 }
