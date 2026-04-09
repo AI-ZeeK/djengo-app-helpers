@@ -83,6 +83,15 @@ export enum TIMELINE_ENUM {
   _1y = "1y",
   all = "all",
 }
+export enum PARTNER_TYPE {
+  TENANT = "TENANT", // e.g. tenant in an estate or commercial property
+  CONTRACTOR = "CONTRACTOR", // e.g. building or maintenance contractor
+  VENDOR = "VENDOR", // goods supplier
+  FREELANCER = "FREELANCER", // project-based independent worker
+  CONSULTANT = "CONSULTANT", // advisory / professional services
+  AGENT = "AGENT", // sales or letting agent
+  OTHER = "OTHER", // catch-all
+}
 
 export enum ADDRESS_TYPE_ENUM {
   USER_HOME = "user_home",

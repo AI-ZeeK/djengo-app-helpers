@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = void 0;
+exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.PARTNER_TYPE = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = void 0;
 var COMPANY_SERVICE_TYPE_ENUM;
 (function (COMPANY_SERVICE_TYPE_ENUM) {
     COMPANY_SERVICE_TYPE_ENUM["SPA"] = "SPA";
@@ -87,6 +87,16 @@ var TIMELINE_ENUM;
     TIMELINE_ENUM["_1y"] = "1y";
     TIMELINE_ENUM["all"] = "all";
 })(TIMELINE_ENUM || (exports.TIMELINE_ENUM = TIMELINE_ENUM = {}));
+var PARTNER_TYPE;
+(function (PARTNER_TYPE) {
+    PARTNER_TYPE["TENANT"] = "TENANT";
+    PARTNER_TYPE["CONTRACTOR"] = "CONTRACTOR";
+    PARTNER_TYPE["VENDOR"] = "VENDOR";
+    PARTNER_TYPE["FREELANCER"] = "FREELANCER";
+    PARTNER_TYPE["CONSULTANT"] = "CONSULTANT";
+    PARTNER_TYPE["AGENT"] = "AGENT";
+    PARTNER_TYPE["OTHER"] = "OTHER";
+})(PARTNER_TYPE || (exports.PARTNER_TYPE = PARTNER_TYPE = {}));
 var ADDRESS_TYPE_ENUM;
 (function (ADDRESS_TYPE_ENUM) {
     ADDRESS_TYPE_ENUM["USER_HOME"] = "user_home";
