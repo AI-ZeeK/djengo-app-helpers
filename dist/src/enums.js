@@ -1,6 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.PARTNER_TYPE = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = void 0;
+exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.PARTNER_TYPE = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = exports.CALENDAR_EVENT_TYPE_ENUM = void 0;
+var CALENDAR_EVENT_TYPE_ENUM;
+(function (CALENDAR_EVENT_TYPE_ENUM) {
+    CALENDAR_EVENT_TYPE_ENUM["LEAVE"] = "LEAVE";
+    CALENDAR_EVENT_TYPE_ENUM["HOLIDAY"] = "HOLIDAY";
+    CALENDAR_EVENT_TYPE_ENUM["STAFF_EVENT"] = "STAFF_EVENT";
+    CALENDAR_EVENT_TYPE_ENUM["MEETING"] = "MEETING";
+    CALENDAR_EVENT_TYPE_ENUM["APPOINTMENT"] = "APPOINTMENT";
+    CALENDAR_EVENT_TYPE_ENUM["REMINDER"] = "REMINDER";
+    CALENDAR_EVENT_TYPE_ENUM["OTHER"] = "OTHER";
+})(CALENDAR_EVENT_TYPE_ENUM || (exports.CALENDAR_EVENT_TYPE_ENUM = CALENDAR_EVENT_TYPE_ENUM = {}));
 var COMPANY_SERVICE_TYPE_ENUM;
 (function (COMPANY_SERVICE_TYPE_ENUM) {
     COMPANY_SERVICE_TYPE_ENUM["SPA"] = "SPA";

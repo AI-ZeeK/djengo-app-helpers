@@ -1,3 +1,12 @@
+export declare enum CALENDAR_EVENT_TYPE_ENUM {
+    LEAVE = "LEAVE",
+    HOLIDAY = "HOLIDAY",
+    STAFF_EVENT = "STAFF_EVENT",
+    MEETING = "MEETING",
+    APPOINTMENT = "APPOINTMENT",
+    REMINDER = "REMINDER",
+    OTHER = "OTHER"
+}
 export declare enum COMPANY_SERVICE_TYPE_ENUM {
     SPA = "SPA",
     HOTEL = "HOTEL",
