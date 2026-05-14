@@ -9,6 +9,7 @@ export declare enum CALENDAR_RECURRENCE_PRESET_ENUM {
 export declare enum CALENDAR_EVENT_TYPE_ENUM {
     MEETING = "MEETING",
     TASK = "TASK",
+    SHIFT = "SHIFT",
     REMINDER = "REMINDER",
     HOLIDAY = "HOLIDAY",
     LEAVE = "LEAVE",
