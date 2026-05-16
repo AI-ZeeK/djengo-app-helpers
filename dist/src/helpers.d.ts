@@ -2,7 +2,42 @@ type ExtractRouteParams<T extends string> = T extends `${string}:${infer Param}/
 type RouteParams<T extends string> = {
     [K in ExtractRouteParams<T>]: string | number | (string | number)[];
 };
+/** UI tokens derived from a single server-saved accent (role level color) + theme. */
+export type RoleLevelUiChrome = {
+    surface: string;
+    border: string;
+    ring: string;
+    dot: string;
+    badgeBg: string;
+    badgeText: string;
+    titleText: string;
+    mutedText: string;
+};
 export declare class AppHelper {
+    private static algorithm;
+    static isDarkColor: (color: string | undefined) => boolean;
+    private static relativeLuminanceChannel;
+    /** WCAG 2.x relative luminance (0–1). */
+    static relativeLuminance(rgb: {
+        r: number;
+        g: number;
+        b: number;
+    }): number;
+    static wcagContrastRatio(lumA: number, lumB: number): number;
+    /**
+     * Best-effort readable foreground (hex) for text/icons on a solid background.
+     * Uses WCAG luminance for hex colors; falls back to `isDarkColor` for tailwind-style strings.
+     * `isDark` nudges light-mode-on-dark-UI toward slightly softer highlights when contrast is tied.
+     */
+    static contrastingForegroundForBackground(cssColor: string | undefined, opts?: {
+        isDark?: boolean;
+    }): string;
+    /**
+     * Card / legend chrome from one accent color (saved on the server) plus light/dark page context.
+     */
+    static roleLevelUiFromAccent(accentCss: string | undefined, isDark: boolean): RoleLevelUiChrome;
+    static camelToWords: (str: string) => string;
+    static getDatePart: (datetime: string) => string;
     /**
      * Generates a random OTP (One-Time Password)
      * @param options Configuration options for OTP generation
@@ -95,6 +130,12 @@ export declare class AppHelper {
     };
     static buildWhere(extra: any | undefined, dateRange: any): any;
     static determineFileType(mimetype: string): "image" | "audio" | "video" | "document";
+    /**
+     * Helper function to build query URLs by replacing placeholders with actual values
+     * @param template - URL template with placeholders (e.g., "path/:id?param=:value")
+     * @param params - Object containing parameter values to substitute
+     * @returns Formatted URL with placeholders replaced
+     */
     static buildQueryUrl<T extends string>(template: T, params: RouteParams<T>): string;
 }
 export {};
