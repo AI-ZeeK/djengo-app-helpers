@@ -111,6 +111,7 @@ export declare enum TIMELINE_ENUM {
 }
 export declare enum PARTNER_TYPE {
     TENANT = "TENANT",// e.g. tenant in an estate or commercial property
+    PATIENT = "PATIENT",// hospital / care occupant linked to a facility bed or room
     CONTRACTOR = "CONTRACTOR",// e.g. building or maintenance contractor
     VENDOR = "VENDOR",// goods supplier
     FREELANCER = "FREELANCER",// project-based independent worker
@@ -118,6 +119,8 @@ export declare enum PARTNER_TYPE {
     AGENT = "AGENT",// sales or letting agent
     OTHER = "OTHER"
 }
+export * from "./facility-enums";
+export * from "./facility-helpers";
 export declare enum ADDRESS_TYPE_ENUM {
     USER_HOME = "user_home",
     USER_WORK = "user_work",

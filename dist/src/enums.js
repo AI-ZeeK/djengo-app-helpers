@@ -1,4 +1,18 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.PARTNER_TYPE = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = exports.CALENDAR_EVENT_TYPE_ENUM = exports.CALENDAR_RECURRENCE_PRESET_ENUM = void 0;
 /** Matches gRPC `CalendarRecurrencePreset` in events.proto (create/update calendar event). */
@@ -126,6 +140,7 @@ var TIMELINE_ENUM;
 var PARTNER_TYPE;
 (function (PARTNER_TYPE) {
     PARTNER_TYPE["TENANT"] = "TENANT";
+    PARTNER_TYPE["PATIENT"] = "PATIENT";
     PARTNER_TYPE["CONTRACTOR"] = "CONTRACTOR";
     PARTNER_TYPE["VENDOR"] = "VENDOR";
     PARTNER_TYPE["FREELANCER"] = "FREELANCER";
@@ -133,6 +148,8 @@ var PARTNER_TYPE;
     PARTNER_TYPE["AGENT"] = "AGENT";
     PARTNER_TYPE["OTHER"] = "OTHER";
 })(PARTNER_TYPE || (exports.PARTNER_TYPE = PARTNER_TYPE = {}));
+__exportStar(require("./facility-enums"), exports);
+__exportStar(require("./facility-helpers"), exports);
 var ADDRESS_TYPE_ENUM;
 (function (ADDRESS_TYPE_ENUM) {
     ADDRESS_TYPE_ENUM["USER_HOME"] = "user_home";
