@@ -28,6 +28,34 @@ const NODE_TYPE_TO_ASSET_KIND: Partial<
   [FACILITY_NODE_TYPE_ENUM.SECTION]: FACILITY_ASSET_KIND_ENUM.ASSET_KIND_SECTION,
 };
 
+/** Proto FacilityAssetKind numeric values → string enum (facility.proto). */
+const FACILITY_ASSET_KIND_BY_NUMBER: Record<number, FACILITY_ASSET_KIND_ENUM> =
+  {
+    0: FACILITY_ASSET_KIND_ENUM.FACILITY_ASSET_KIND_UNSPECIFIED,
+    1: FACILITY_ASSET_KIND_ENUM.ASSET_KIND_BED,
+    2: FACILITY_ASSET_KIND_ENUM.ASSET_KIND_ROOM,
+    3: FACILITY_ASSET_KIND_ENUM.ASSET_KIND_TABLE,
+    4: FACILITY_ASSET_KIND_ENUM.ASSET_KIND_HOUSE,
+    5: FACILITY_ASSET_KIND_ENUM.ASSET_KIND_UNIT,
+    6: FACILITY_ASSET_KIND_ENUM.ASSET_KIND_SECTION,
+  };
+
+/** Normalize API/proto asset kind (number, "1", ASSET_KIND_BED) to string enum. */
+export function normalizeFacilityAssetKind(
+  value: unknown,
+): FACILITY_ASSET_KIND_ENUM | "" {
+  if (value == null || value === "") return "";
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return FACILITY_ASSET_KIND_BY_NUMBER[value] ?? "";
+  }
+  const raw = String(value).trim();
+  const asNum = Number(raw);
+  if (raw !== "" && !Number.isNaN(asNum) && String(asNum) === raw) {
+    return FACILITY_ASSET_KIND_BY_NUMBER[asNum] ?? "";
+  }
+  return coerceEnumValue(FACILITY_ASSET_KIND_ENUM, raw, "");
+}
+
 export function isEnumMember<E extends Record<string, string>>(
   enumObj: E,
   value: unknown,
@@ -86,12 +114,19 @@ export function defaultFacilityAssetCapacity(
   }
 }
 
-/** Human-readable asset kind label from ASSET_KIND_* value. */
-export function formatFacilityAssetKindLabel(
-  assetKind: string | undefined | null,
-): string {
-  if (!assetKind) return "asset";
-  return assetKind.replace(/^ASSET_KIND_/, "").replace(/_/g, " ").toLowerCase();
+/** Human-readable asset kind label from ASSET_KIND_* value (string or proto number). */
+export function formatFacilityAssetKindLabel(assetKind: unknown): string {
+  const normalized = normalizeFacilityAssetKind(assetKind);
+  if (
+    !normalized ||
+    normalized === FACILITY_ASSET_KIND_ENUM.FACILITY_ASSET_KIND_UNSPECIFIED
+  ) {
+    return "asset";
+  }
+  return normalized
+    .replace(/^ASSET_KIND_/, "")
+    .replace(/_/g, " ")
+    .toLowerCase();
 }
 
 /** Labels for enum option UIs (e.g. "icu" → "ICU"). */

@@ -10,6 +10,7 @@ export enum FACILITY_MODE_ENUM {
   HOSPITAL = "HOSPITAL",
   ESTATE = "ESTATE",
   HOSPITALITY = "HOSPITALITY",
+  RESTAURANT = "RESTAURANT",
 }
 
 /** Matches facility.proto FacilityNodeType */
@@ -28,6 +29,8 @@ export enum FACILITY_NODE_TYPE_ENUM {
   ZONE = "ZONE",
   SECTION = "SECTION",
   SITE = "SITE",
+
+  BAR = "BAR",
 }
 
 /** Matches facility.proto FacilityAssetKind */

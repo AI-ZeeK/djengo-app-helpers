@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OCCUPIABLE_FACILITY_NODE_TYPES = void 0;
+exports.normalizeFacilityAssetKind = normalizeFacilityAssetKind;
 exports.isEnumMember = isEnumMember;
 exports.coerceEnumValue = coerceEnumValue;
 exports.nodeTypeToAssetKind = nodeTypeToAssetKind;
@@ -27,6 +28,30 @@ const NODE_TYPE_TO_ASSET_KIND = {
     [facility_enums_1.FACILITY_NODE_TYPE_ENUM.UNIT]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_UNIT,
     [facility_enums_1.FACILITY_NODE_TYPE_ENUM.SECTION]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_SECTION,
 };
+/** Proto FacilityAssetKind numeric values → string enum (facility.proto). */
+const FACILITY_ASSET_KIND_BY_NUMBER = {
+    0: facility_enums_1.FACILITY_ASSET_KIND_ENUM.FACILITY_ASSET_KIND_UNSPECIFIED,
+    1: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_BED,
+    2: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_ROOM,
+    3: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_TABLE,
+    4: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_HOUSE,
+    5: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_UNIT,
+    6: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_SECTION,
+};
+/** Normalize API/proto asset kind (number, "1", ASSET_KIND_BED) to string enum. */
+function normalizeFacilityAssetKind(value) {
+    if (value == null || value === "")
+        return "";
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return FACILITY_ASSET_KIND_BY_NUMBER[value] ?? "";
+    }
+    const raw = String(value).trim();
+    const asNum = Number(raw);
+    if (raw !== "" && !Number.isNaN(asNum) && String(asNum) === raw) {
+        return FACILITY_ASSET_KIND_BY_NUMBER[asNum] ?? "";
+    }
+    return coerceEnumValue(facility_enums_1.FACILITY_ASSET_KIND_ENUM, raw, "");
+}
 function isEnumMember(enumObj, value) {
     if (value == null)
         return false;
@@ -70,11 +95,17 @@ function defaultFacilityAssetCapacity(nodeType, facilityMode = facility_enums_1.
             return 1;
     }
 }
-/** Human-readable asset kind label from ASSET_KIND_* value. */
+/** Human-readable asset kind label from ASSET_KIND_* value (string or proto number). */
 function formatFacilityAssetKindLabel(assetKind) {
-    if (!assetKind)
+    const normalized = normalizeFacilityAssetKind(assetKind);
+    if (!normalized ||
+        normalized === facility_enums_1.FACILITY_ASSET_KIND_ENUM.FACILITY_ASSET_KIND_UNSPECIFIED) {
         return "asset";
-    return assetKind.replace(/^ASSET_KIND_/, "").replace(/_/g, " ").toLowerCase();
+    }
+    return normalized
+        .replace(/^ASSET_KIND_/, "")
+        .replace(/_/g, " ")
+        .toLowerCase();
 }
 /** Labels for enum option UIs (e.g. "icu" → "ICU"). */
 function formatEnumOptionLabel(value) {
