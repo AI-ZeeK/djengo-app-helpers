@@ -260,3 +260,18 @@ export const ADMIN_MODULE_MANAGE_PERMISSIONS: Record<AdminNavModule, string[]> =
   [AdminNavModule.SETTINGS]: [P.MANAGE_SETTINGS],
   [AdminNavModule.ADMIN_MANAGEMENT]: [P.MANAGE_ADMIN_TEAM, P.MANAGE_ADMIN_ROLES],
 };
+
+/** Frontend admin nav keys → view permissions for sidebar / route guards. */
+export const ADMIN_NAV_SECTION_VIEW_PERMISSIONS = {
+  overview: ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.DASHBOARD],
+  chats: ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.CHATS],
+  support: ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.SUPPORT],
+  management: ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.MANAGEMENT],
+  security: ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.SECURITY],
+  adminTeam: ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.ADMIN_MANAGEMENT],
+  financial: ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.FINANCIAL],
+  settings: ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.SETTINGS],
+} as const;
+
+/** @deprecated Use ADMIN_NAV_SECTION_VIEW_PERMISSIONS — kept for existing imports. */
+export const NAV_SECTION_VIEW_PERMISSIONS = ADMIN_NAV_SECTION_VIEW_PERMISSIONS;

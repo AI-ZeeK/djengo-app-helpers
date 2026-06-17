@@ -63,4 +63,26 @@ export declare const DEFAULT_ADMIN_PERMISSION_NAMES: string[];
 export declare const ADMIN_MODULE_VIEW_PERMISSIONS: Record<AdminNavModule, string[]>;
 /** Manage permissions required for mutating actions within a section. */
 export declare const ADMIN_MODULE_MANAGE_PERMISSIONS: Record<AdminNavModule, string[]>;
+/** Frontend admin nav keys → view permissions for sidebar / route guards. */
+export declare const ADMIN_NAV_SECTION_VIEW_PERMISSIONS: {
+    readonly overview: string[];
+    readonly chats: string[];
+    readonly support: string[];
+    readonly management: string[];
+    readonly security: string[];
+    readonly adminTeam: string[];
+    readonly financial: string[];
+    readonly settings: string[];
+};
+/** @deprecated Use ADMIN_NAV_SECTION_VIEW_PERMISSIONS — kept for existing imports. */
+export declare const NAV_SECTION_VIEW_PERMISSIONS: {
+    readonly overview: string[];
+    readonly chats: string[];
+    readonly support: string[];
+    readonly management: string[];
+    readonly security: string[];
+    readonly adminTeam: string[];
+    readonly financial: string[];
+    readonly settings: string[];
+};
 //# sourceMappingURL=admin-permissions.d.ts.map

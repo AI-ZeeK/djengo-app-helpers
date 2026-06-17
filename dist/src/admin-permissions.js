@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ADMIN_MODULE_MANAGE_PERMISSIONS = exports.ADMIN_MODULE_VIEW_PERMISSIONS = exports.DEFAULT_ADMIN_PERMISSION_NAMES = exports.ALL_ADMIN_PERMISSION_NAMES = exports.ADMIN_PERMISSION_GROUPS = exports.AdminNavModule = exports.AdminPlatformPermission = void 0;
+exports.NAV_SECTION_VIEW_PERMISSIONS = exports.ADMIN_NAV_SECTION_VIEW_PERMISSIONS = exports.ADMIN_MODULE_MANAGE_PERMISSIONS = exports.ADMIN_MODULE_VIEW_PERMISSIONS = exports.DEFAULT_ADMIN_PERMISSION_NAMES = exports.ALL_ADMIN_PERMISSION_NAMES = exports.ADMIN_PERMISSION_GROUPS = exports.AdminNavModule = exports.AdminPlatformPermission = void 0;
 /** Platform admin permission slugs — single source for seed, guards, and services. */
 var AdminPlatformPermission;
 (function (AdminPlatformPermission) {
@@ -240,4 +240,17 @@ exports.ADMIN_MODULE_MANAGE_PERMISSIONS = {
     [AdminNavModule.SETTINGS]: [P.MANAGE_SETTINGS],
     [AdminNavModule.ADMIN_MANAGEMENT]: [P.MANAGE_ADMIN_TEAM, P.MANAGE_ADMIN_ROLES],
 };
+/** Frontend admin nav keys → view permissions for sidebar / route guards. */
+exports.ADMIN_NAV_SECTION_VIEW_PERMISSIONS = {
+    overview: exports.ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.DASHBOARD],
+    chats: exports.ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.CHATS],
+    support: exports.ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.SUPPORT],
+    management: exports.ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.MANAGEMENT],
+    security: exports.ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.SECURITY],
+    adminTeam: exports.ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.ADMIN_MANAGEMENT],
+    financial: exports.ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.FINANCIAL],
+    settings: exports.ADMIN_MODULE_VIEW_PERMISSIONS[AdminNavModule.SETTINGS],
+};
+/** @deprecated Use ADMIN_NAV_SECTION_VIEW_PERMISSIONS — kept for existing imports. */
+exports.NAV_SECTION_VIEW_PERMISSIONS = exports.ADMIN_NAV_SECTION_VIEW_PERMISSIONS;
 //# sourceMappingURL=admin-permissions.js.map

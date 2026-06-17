@@ -48,6 +48,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./admin-permissions": {
+      "import": "./dist/src/admin-permissions.js",
+      "require": "./dist/src/admin-permissions.js",
+      "types": "./dist/src/admin-permissions.d.ts"
     }
   }
 }
