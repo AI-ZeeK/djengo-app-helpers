@@ -563,6 +563,13 @@ export class AppHelper {
     return trimmed || null;
   }
 
+  /** Prisma updates — undefined instead of null when empty. */
+  static normalizeStoredTextOptional(
+    value?: string | null,
+  ): string | undefined {
+    return AppHelper.normalizeStoredText(value) ?? undefined;
+  }
+
   /**
    * Validates an email address format
    * @param email Email address to validate

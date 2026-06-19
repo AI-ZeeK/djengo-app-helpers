@@ -82,6 +82,8 @@ export declare class AppHelper {
     static normalizeStoredNameOptional(value?: string | null): string | undefined;
     /** Free-text fields (descriptions, notes) — trim only, preserve casing. */
     static normalizeStoredText(value?: string | null): string | null;
+    /** Prisma updates — undefined instead of null when empty. */
+    static normalizeStoredTextOptional(value?: string | null): string | undefined;
     /**
      * Validates an email address format
      * @param email Email address to validate

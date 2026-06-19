@@ -223,6 +223,10 @@ class AppHelper {
         const trimmed = (value ?? "").trim();
         return trimmed || null;
     }
+    /** Prisma updates — undefined instead of null when empty. */
+    static normalizeStoredTextOptional(value) {
+        return AppHelper.normalizeStoredText(value) ?? undefined;
+    }
     /**
      * Validates an email address format
      * @param email Email address to validate
