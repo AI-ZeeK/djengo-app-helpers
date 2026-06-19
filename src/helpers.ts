@@ -532,6 +532,11 @@ export class AppHelper {
     return AppHelper.normalizeEmail(value) ?? "";
   }
 
+  /** Prisma / audit payloads — undefined instead of null when empty. */
+  static normalizeEmailOptional(value?: string | null): string | undefined {
+    return AppHelper.normalizeEmail(value) ?? undefined;
+  }
+
   /**
    * Canonical title/name storage: company, branch, department, role,
    * staff, partner, and other entity display names.
@@ -543,6 +548,13 @@ export class AppHelper {
 
   static normalizeStoredNameOrEmpty(value?: string | null): string {
     return AppHelper.normalizeStoredName(value) ?? "";
+  }
+
+  /** Prisma updates — undefined instead of null when empty. */
+  static normalizeStoredNameOptional(
+    value?: string | null,
+  ): string | undefined {
+    return AppHelper.normalizeStoredName(value) ?? undefined;
   }
 
   /** Free-text fields (descriptions, notes) — trim only, preserve casing. */

@@ -70,12 +70,16 @@ export declare class AppHelper {
      */
     static normalizeEmail(value?: string | null): string | null;
     static normalizeEmailOrEmpty(value?: string | null): string;
+    /** Prisma / audit payloads — undefined instead of null when empty. */
+    static normalizeEmailOptional(value?: string | null): string | undefined;
     /**
      * Canonical title/name storage: company, branch, department, role,
      * staff, partner, and other entity display names.
      */
     static normalizeStoredName(value?: string | null): string | null;
     static normalizeStoredNameOrEmpty(value?: string | null): string;
+    /** Prisma updates — undefined instead of null when empty. */
+    static normalizeStoredNameOptional(value?: string | null): string | undefined;
     /** Free-text fields (descriptions, notes) — trim only, preserve casing. */
     static normalizeStoredText(value?: string | null): string | null;
     /**

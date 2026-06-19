@@ -199,6 +199,10 @@ class AppHelper {
     static normalizeEmailOrEmpty(value) {
         return AppHelper.normalizeEmail(value) ?? "";
     }
+    /** Prisma / audit payloads — undefined instead of null when empty. */
+    static normalizeEmailOptional(value) {
+        return AppHelper.normalizeEmail(value) ?? undefined;
+    }
     /**
      * Canonical title/name storage: company, branch, department, role,
      * staff, partner, and other entity display names.
@@ -209,6 +213,10 @@ class AppHelper {
     }
     static normalizeStoredNameOrEmpty(value) {
         return AppHelper.normalizeStoredName(value) ?? "";
+    }
+    /** Prisma updates — undefined instead of null when empty. */
+    static normalizeStoredNameOptional(value) {
+        return AppHelper.normalizeStoredName(value) ?? undefined;
     }
     /** Free-text fields (descriptions, notes) — trim only, preserve casing. */
     static normalizeStoredText(value) {
