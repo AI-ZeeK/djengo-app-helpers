@@ -521,13 +521,57 @@ export class AppHelper {
   }
 
   /**
+   * Canonical email storage: trim + lowercase (login, uniqueness, lookups).
+   */
+  static normalizeEmail(value?: string | null): string | null {
+    const trimmed = (value ?? "").trim();
+    return trimmed ? trimmed.toLowerCase() : null;
+  }
+
+  static normalizeEmailOrEmpty(value?: string | null): string {
+    return AppHelper.normalizeEmail(value) ?? "";
+  }
+
+  /**
+   * Canonical title/name storage: company, branch, department, role,
+   * staff, partner, and other entity display names.
+   */
+  static normalizeStoredName(value?: string | null): string | null {
+    const trimmed = (value ?? "").trim();
+    return trimmed ? trimmed.toLowerCase() : null;
+  }
+
+  static normalizeStoredNameOrEmpty(value?: string | null): string {
+    return AppHelper.normalizeStoredName(value) ?? "";
+  }
+
+  /** Free-text fields (descriptions, notes) — trim only, preserve casing. */
+  static normalizeStoredText(value?: string | null): string | null {
+    const trimmed = (value ?? "").trim();
+    return trimmed || null;
+  }
+
+  /**
    * Validates an email address format
    * @param email Email address to validate
    * @returns boolean indicating if email is valid
    */
   static isValidEmail(email: string): boolean {
+    const normalized = AppHelper.normalizeEmail(email);
+    if (!normalized) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    return emailRegex.test(normalized);
+  }
+
+  static isPlausibleEmail(email: string): boolean {
+    return AppHelper.isValidEmail(email);
+  }
+
+  static emailsMatch(a: string, b: string): boolean {
+    const na = AppHelper.normalizeEmail(a);
+    const nb = AppHelper.normalizeEmail(b);
+    if (!na || !nb) return false;
+    return na === nb;
   }
 
   /**

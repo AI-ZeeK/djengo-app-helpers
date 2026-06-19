@@ -66,11 +66,26 @@ export declare class AppHelper {
      */
     static generateUniqueValue(value: string): string;
     /**
+     * Canonical email storage: trim + lowercase (login, uniqueness, lookups).
+     */
+    static normalizeEmail(value?: string | null): string | null;
+    static normalizeEmailOrEmpty(value?: string | null): string;
+    /**
+     * Canonical title/name storage: company, branch, department, role,
+     * staff, partner, and other entity display names.
+     */
+    static normalizeStoredName(value?: string | null): string | null;
+    static normalizeStoredNameOrEmpty(value?: string | null): string;
+    /** Free-text fields (descriptions, notes) — trim only, preserve casing. */
+    static normalizeStoredText(value?: string | null): string | null;
+    /**
      * Validates an email address format
      * @param email Email address to validate
      * @returns boolean indicating if email is valid
      */
     static isValidEmail(email: string): boolean;
+    static isPlausibleEmail(email: string): boolean;
+    static emailsMatch(a: string, b: string): boolean;
     /**
      * Formats a phone number to a standard format
      * @param phone Phone number to format
