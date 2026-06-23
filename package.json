@@ -13,7 +13,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "helpers": "npm run build && npm publish --access public"
   },
   "files": [
     "dist/",
