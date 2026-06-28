@@ -1,3 +1,12 @@
+export type PhoneInputParts = {
+    dialCode: string;
+    phoneNumber: string;
+};
+export type SplitCandidate = {
+    dialCode: string;
+    nationalDigits: string;
+    score: number;
+};
 type ExtractRouteParams<T extends string> = T extends `${string}:${infer Param}/${infer Rest}` ? Param | ExtractRouteParams<`/${Rest}`> : T extends `${string}:${infer Param}&${infer Rest}` ? Param | ExtractRouteParams<`&${Rest}`> : T extends `${string}:${infer Param}?${infer Rest}` ? Param | ExtractRouteParams<`?${Rest}`> : T extends `${string}:${infer Param}` ? Param : never;
 type RouteParams<T extends string> = {
     [K in ExtractRouteParams<T>]: string | number | (string | number)[];
@@ -158,6 +167,66 @@ export declare class AppHelper {
      * @returns Formatted URL with placeholders replaced
      */
     static buildQueryUrl<T extends string>(template: T, params: RouteParams<T>): string;
+    /** Max digits in the calling-code field (+ prefix is UI only). */
+    static DIAL_CODE_MAX_LENGTH: number;
+    /** Debounce before auto-splitting a combined number across dial + national fields. */
+    static PHONE_AUTO_SPLIT_DEBOUNCE_MS: number;
+    /** Default debounce before phone availability lookup API call. */
+    static PHONE_VALIDATION_DEBOUNCE_MS: number;
+    /** Minimum total digits before attempting an auto-split while typing. */
+    static PHONE_AUTO_SPLIT_MIN_DIGITS: number;
+    /**
+     * ITU-T E.164 country calling codes (digits only).
+     * Used to auto-advance once the prefix is unambiguous (e.g. 44 → UK, 254 → KE).
+     */
+    static CALLING_CODES: Set<string>;
+    static clampDialCodeInput(value: string): string;
+    /** True when focus should move to the national number field. */
+    static shouldAdvanceFromDialCode(digits: string): boolean;
+    static stripInternationalPrefix(digits: string): string;
+    /** Typical national subscriber lengths for common calling codes (ITU). */
+    static PREFERRED_NATIONAL_LENGTHS: Record<string, number[]>;
+    static scorePhoneSplit(dialCode: string, national: string, totalDigits: number, dialHint?: string): number;
+    static collectCallingCodeSplits(rawDigits: string, dialHint?: string): SplitCandidate[];
+    static pickBestCallingCodeSplit(rawDigits: string, dialHint?: string): {
+        dialCode: string;
+        nationalDigits: string;
+    } | null;
+    /**
+     * Best calling-code split using national length + dial-code specificity scoring.
+     */
+    static splitLeadingCallingCode(rawDigits: string, dialHint?: string): {
+        dialCode: string;
+        nationalDigits: string;
+    } | null;
+    /**
+     * When paste/autofill or typing lands a full number in the national field (or split
+     * across both fields), derive dial + national parts without disturbing valid input.
+     */
+    static tryAutoSplitPhoneInput(dialCode: string, phoneNumber: string): PhoneInputParts | null;
+    /** Parse clipboard/autofill text into dial + national when possible. */
+    static parsePhoneClipboardText(text: string, dialHint?: string): PhoneInputParts | null;
+    /** Digits only. */
+    static phoneDigits(value: string): string;
+    /** Calling code digits (no +), e.g. 254. */
+    static normalizeDialCode(code: string): string;
+    /** National subscriber number — strips leading 0 and embedded dial prefix. */
+    static normalizeNationalNumber(phoneNumber: string, dialCode?: string): string;
+    static parsePhoneParts(dialCode: string, phoneNumber: string): {
+        dial: string;
+        national: string;
+    };
+    static isPlausibleNationalNumber(national: string): boolean;
+    static phonesMatch(dialA: string, nationalA: string, dialB: string, nationalB: string): boolean;
+    /** Parse legacy stored phone (may be E.164 in phone_number). */
+    static parseStoredPhone(storedPhone: string | null | undefined, storedDialCode?: string | null): {
+        dialCode: string;
+        nationalNumber: string;
+    };
+    /** Display E.164-style phone from stored dial + national parts. */
+    static formatDisplayPhone(national: string | null | undefined, dialCode?: string | null): string;
+    /** @deprecated use isPlausibleNationalNumber */
+    static isPlausiblePhone(phone: string): boolean;
 }
 export {};
 //# sourceMappingURL=helpers.d.ts.map

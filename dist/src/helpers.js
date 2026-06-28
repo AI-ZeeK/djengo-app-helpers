@@ -536,6 +536,251 @@ class AppHelper {
         result = result.replace(/:[^\/&\?]+/g, "");
         return result;
     }
+    static clampDialCodeInput(value) {
+        return AppHelper.phoneDigits(value).slice(0, AppHelper.DIAL_CODE_MAX_LENGTH);
+    }
+    /** True when focus should move to the national number field. */
+    static shouldAdvanceFromDialCode(digits) {
+        const code = AppHelper.phoneDigits(digits);
+        if (!code)
+            return false;
+        if (code.length >= AppHelper.DIAL_CODE_MAX_LENGTH)
+            return true;
+        return AppHelper.CALLING_CODES.has(code);
+    }
+    static stripInternationalPrefix(digits) {
+        let d = AppHelper.phoneDigits(digits);
+        if (d.startsWith("00")) {
+            d = d.slice(2);
+        }
+        return d;
+    }
+    static scorePhoneSplit(dialCode, national, totalDigits, dialHint = "") {
+        let score = 0;
+        // Prefer longer, more specific calling codes (254 over 2).
+        score += dialCode.length * 15;
+        if (dialHint && dialCode.startsWith(dialHint)) {
+            score += dialHint.length === dialCode.length ? 40 : 20;
+        }
+        else if (dialHint && !dialCode.startsWith(dialHint)) {
+            score -= 50;
+        }
+        const preferred = AppHelper.PREFERRED_NATIONAL_LENGTHS[dialCode];
+        if (preferred?.includes(national.length)) {
+            score += 60;
+        }
+        else if (national.length >= 7 && national.length <= 10) {
+            score += 25;
+        }
+        else if (national.length >= 6 && national.length <= 12) {
+            score += 8;
+        }
+        else {
+            score -= 80;
+        }
+        // Single-digit codes (esp. +1) are ambiguous — require strong national shape.
+        if (dialCode.length === 1) {
+            if (dialCode === "1" && national.length === 10) {
+                score += 35;
+            }
+            else if (dialCode === "7" && national.length === 10) {
+                score += 25;
+            }
+            else {
+                score -= 45;
+            }
+        }
+        // E.164 allows max 15 digits total.
+        if (totalDigits > 15) {
+            score -= 100;
+        }
+        else if (totalDigits >= 11 && totalDigits <= 13) {
+            score += 12;
+        }
+        return score;
+    }
+    static collectCallingCodeSplits(rawDigits, dialHint = "") {
+        const digits = AppHelper.stripInternationalPrefix(rawDigits);
+        if (!digits || digits.length < AppHelper.PHONE_AUTO_SPLIT_MIN_DIGITS) {
+            return [];
+        }
+        const candidates = [];
+        for (const len of [3, 2, 1]) {
+            if (digits.length <= len + 5)
+                continue;
+            const dialCode = digits.slice(0, len);
+            if (!AppHelper.CALLING_CODES.has(dialCode))
+                continue;
+            const national = AppHelper.normalizeNationalNumber(digits.slice(len), dialCode);
+            if (!AppHelper.isPlausibleNationalNumber(national))
+                continue;
+            candidates.push({
+                dialCode,
+                nationalDigits: national,
+                score: AppHelper.scorePhoneSplit(dialCode, national, digits.length, dialHint),
+            });
+        }
+        return candidates.sort((a, b) => b.score - a.score);
+    }
+    static pickBestCallingCodeSplit(rawDigits, dialHint = "") {
+        const ranked = AppHelper.collectCallingCodeSplits(rawDigits, dialHint);
+        if (!ranked.length)
+            return null;
+        const best = ranked[0];
+        const runnerUp = ranked[1];
+        // Reject weak guesses and near-ties between different dial codes.
+        if (best.score < 10)
+            return null;
+        if (runnerUp &&
+            runnerUp.dialCode !== best.dialCode &&
+            runnerUp.score >= best.score - 8) {
+            return null;
+        }
+        return { dialCode: best.dialCode, nationalDigits: best.nationalDigits };
+    }
+    /**
+     * Best calling-code split using national length + dial-code specificity scoring.
+     */
+    static splitLeadingCallingCode(rawDigits, dialHint = "") {
+        return AppHelper.pickBestCallingCodeSplit(rawDigits, dialHint);
+    }
+    /**
+     * When paste/autofill or typing lands a full number in the national field (or split
+     * across both fields), derive dial + national parts without disturbing valid input.
+     */
+    static tryAutoSplitPhoneInput(dialCode, phoneNumber) {
+        const dial = AppHelper.phoneDigits(dialCode);
+        const national = AppHelper.phoneDigits(phoneNumber);
+        if (dial && national) {
+            const normalizedNational = AppHelper.normalizeNationalNumber(national, dial);
+            if (AppHelper.CALLING_CODES.has(dial) &&
+                AppHelper.isPlausibleNationalNumber(normalizedNational) &&
+                normalizedNational.length <= 12 &&
+                !national.startsWith(dial)) {
+                if (normalizedNational !== national) {
+                    return { dialCode: dial, phoneNumber: normalizedNational };
+                }
+                return null;
+            }
+        }
+        if (national.length >= AppHelper.PHONE_AUTO_SPLIT_MIN_DIGITS) {
+            const fromNational = AppHelper.splitLeadingCallingCode(national, dial);
+            if (fromNational &&
+                (fromNational.dialCode !== dial ||
+                    fromNational.nationalDigits !==
+                        AppHelper.normalizeNationalNumber(national, dial))) {
+                return {
+                    dialCode: fromNational.dialCode,
+                    phoneNumber: fromNational.nationalDigits,
+                };
+            }
+        }
+        const combined = dial + national;
+        if (combined.length >= AppHelper.PHONE_AUTO_SPLIT_MIN_DIGITS) {
+            const fromCombined = AppHelper.splitLeadingCallingCode(combined, dial);
+            if (fromCombined &&
+                (fromCombined.dialCode !== dial ||
+                    fromCombined.nationalDigits !==
+                        AppHelper.normalizeNationalNumber(national, dial))) {
+                return {
+                    dialCode: fromCombined.dialCode,
+                    phoneNumber: fromCombined.nationalDigits,
+                };
+            }
+        }
+        if (dial && national.startsWith("0")) {
+            const stripped = AppHelper.normalizeNationalNumber(national, dial);
+            if (stripped !== national) {
+                return { dialCode: dial, phoneNumber: stripped };
+            }
+        }
+        return null;
+    }
+    /** Parse clipboard/autofill text into dial + national when possible. */
+    static parsePhoneClipboardText(text, dialHint = "") {
+        const digits = AppHelper.stripInternationalPrefix(text);
+        if (!digits || digits.length < 10)
+            return null;
+        const split = AppHelper.pickBestCallingCodeSplit(digits, dialHint);
+        if (!split)
+            return null;
+        return { dialCode: split.dialCode, phoneNumber: split.nationalDigits };
+    }
+    /** Digits only. */
+    static phoneDigits(value) {
+        return value.replace(/\D/g, "");
+    }
+    /** Calling code digits (no +), e.g. 254. */
+    static normalizeDialCode(code) {
+        return AppHelper.phoneDigits(code);
+    }
+    /** National subscriber number — strips leading 0 and embedded dial prefix. */
+    static normalizeNationalNumber(phoneNumber, dialCode = "") {
+        let digits = AppHelper.phoneDigits(phoneNumber);
+        const dial = AppHelper.normalizeDialCode(dialCode);
+        if (dial && digits.startsWith(dial)) {
+            digits = digits.slice(dial.length);
+        }
+        if (digits.startsWith("0")) {
+            digits = digits.slice(1);
+        }
+        return digits;
+    }
+    static parsePhoneParts(dialCode, phoneNumber) {
+        const dial = AppHelper.normalizeDialCode(dialCode);
+        const national = AppHelper.normalizeNationalNumber(phoneNumber, dial);
+        return { dial, national };
+    }
+    static isPlausibleNationalNumber(national) {
+        const len = national.length;
+        return len >= 6 && len <= 12;
+    }
+    static phonesMatch(dialA, nationalA, dialB, nationalB) {
+        const a = AppHelper.normalizeNationalNumber(nationalA, dialA);
+        const b = AppHelper.normalizeNationalNumber(nationalB, dialB);
+        if (!a || !b)
+            return false;
+        if (dialA && dialB && dialA !== dialB)
+            return false;
+        if (a === b)
+            return true;
+        const tail = 9;
+        if (a.length >= tail && b.length >= tail) {
+            return a.slice(-tail) === b.slice(-tail);
+        }
+        return false;
+    }
+    /** Parse legacy stored phone (may be E.164 in phone_number). */
+    static parseStoredPhone(storedPhone, storedDialCode) {
+        const dialHint = AppHelper.normalizeDialCode(storedDialCode ?? "");
+        let digits = AppHelper.phoneDigits(storedPhone ?? "");
+        if (!digits)
+            return { dialCode: dialHint, nationalNumber: "" };
+        if (dialHint && digits.startsWith(dialHint)) {
+            return {
+                dialCode: dialHint,
+                nationalNumber: AppHelper.normalizeNationalNumber(digits.slice(dialHint.length), ""),
+            };
+        }
+        return {
+            dialCode: dialHint,
+            nationalNumber: AppHelper.normalizeNationalNumber(digits, ""),
+        };
+    }
+    /** Display E.164-style phone from stored dial + national parts. */
+    static formatDisplayPhone(national, dialCode) {
+        const d = AppHelper.normalizeDialCode(dialCode ?? "");
+        const n = AppHelper.normalizeNationalNumber(national ?? "", d);
+        if (!d && !n)
+            return "";
+        if (d && n)
+            return `+${d} ${n}`;
+        return n || d;
+    }
+    /** @deprecated use isPlausibleNationalNumber */
+    static isPlausiblePhone(phone) {
+        return AppHelper.isPlausibleNationalNumber(AppHelper.phoneDigits(phone));
+    }
 }
 exports.AppHelper = AppHelper;
 AppHelper.algorithm = "aes-256-cbc";
@@ -779,5 +1024,53 @@ AppHelper.getDatePart = (datetime) => {
         return datetime;
     }
     return datetime.split("T")[0];
+};
+/** Max digits in the calling-code field (+ prefix is UI only). */
+AppHelper.DIAL_CODE_MAX_LENGTH = 3;
+/** Debounce before auto-splitting a combined number across dial + national fields. */
+AppHelper.PHONE_AUTO_SPLIT_DEBOUNCE_MS = 900;
+/** Default debounce before phone availability lookup API call. */
+AppHelper.PHONE_VALIDATION_DEBOUNCE_MS = 900;
+/** Minimum total digits before attempting an auto-split while typing. */
+AppHelper.PHONE_AUTO_SPLIT_MIN_DIGITS = 11;
+/**
+ * ITU-T E.164 country calling codes (digits only).
+ * Used to auto-advance once the prefix is unambiguous (e.g. 44 → UK, 254 → KE).
+ */
+AppHelper.CALLING_CODES = new Set(`
+  1 7 20 27 30 31 32 33 34 36 39 40 41 43 44 45 46 47 48 49
+  51 52 53 54 55 56 57 58 60 61 62 63 64 65 66 81 82 84 86 90 91 92 93 94 95 98
+  211 212 213 216 218 220 221 222 223 224 225 226 227 228 229 230 231 232 233
+  234 235 236 237 238 239 240 241 242 243 244 245 246 248 249 250 251 252 253
+  254 255 256 257 258 260 261 262 263 264 265 266 267 268 269 290 291 297 298 299
+  350 351 352 353 354 355 356 357 358 359 370 371 372 373 374 375 376 377 378
+  379 380 381 382 383 385 386 387 389 420 421 423 500 501 502 503 504 505 506
+  507 508 509 590 591 592 593 594 595 596 597 598 599 670 672 673 674 675 676
+  677 678 679 680 681 682 683 685 686 687 688 689 690 691 692 850 852 853 855
+  856 870 878 880 881 882 883 886 888 960 961 962 963 964 965 966 967 968 970
+  971 972 973 974 975 976 977 992 993 994 995 996 998
+  `
+    .trim()
+    .split(/\s+/));
+/** Typical national subscriber lengths for common calling codes (ITU). */
+AppHelper.PREFERRED_NATIONAL_LENGTHS = {
+    "1": [10],
+    "7": [10],
+    "20": [10],
+    "27": [9],
+    "254": [9],
+    "255": [9],
+    "256": [9],
+    "234": [10],
+    "233": [9],
+    "44": [10],
+    "49": [10, 11],
+    "33": [9],
+    "91": [10],
+    "86": [11],
+    "81": [10],
+    "61": [9],
+    "971": [9],
+    "966": [9],
 };
 //# sourceMappingURL=helpers.js.map
