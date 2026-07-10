@@ -227,6 +227,7 @@ export declare class AppHelper {
     static formatDisplayPhone(national: string | null | undefined, dialCode?: string | null): string;
     /** @deprecated use isPlausibleNationalNumber */
     static isPlausiblePhone(phone: string): boolean;
+    static getBillingPeriodLabel(billingPeriod: string): string;
 }
 export {};
 //# sourceMappingURL=helpers.d.ts.map

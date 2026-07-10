@@ -1377,4 +1377,25 @@ export class AppHelper {
   static isPlausiblePhone(phone: string): boolean {
     return AppHelper.isPlausibleNationalNumber(AppHelper.phoneDigits(phone));
   }
+
+  static getBillingPeriodLabel(billingPeriod: string): string {
+    switch (billingPeriod) {
+      case "PER_NIGHT":
+        return "per night";
+      case "PER_HOUR":
+        return "per hour";
+      case "PER_STAY":
+        return "per stay";
+      case "PER_DAY":
+        return "per day";
+      case "PER_WEEK":
+        return "per week";
+      case "PER_MONTH":
+        return "per month";
+      case "PER_YEAR":
+        return "per year";
+      default:
+        return "";
+    }
+  }
 }
