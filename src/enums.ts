@@ -163,6 +163,7 @@ export enum FILE_ENTITY_TYPE_ENUM {
   TAX_DOCUMENT = "tax_document",
   BANK_DETAILS = "bank_details",
   RESUME = "resume",
+  FACILITY_LISTING_IMAGE = "facility_listing_image",
 }
 
 /**

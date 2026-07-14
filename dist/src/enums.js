@@ -181,6 +181,7 @@ var FILE_ENTITY_TYPE_ENUM;
     FILE_ENTITY_TYPE_ENUM["TAX_DOCUMENT"] = "tax_document";
     FILE_ENTITY_TYPE_ENUM["BANK_DETAILS"] = "bank_details";
     FILE_ENTITY_TYPE_ENUM["RESUME"] = "resume";
+    FILE_ENTITY_TYPE_ENUM["FACILITY_LISTING_IMAGE"] = "facility_listing_image";
 })(FILE_ENTITY_TYPE_ENUM || (exports.FILE_ENTITY_TYPE_ENUM = FILE_ENTITY_TYPE_ENUM = {}));
 /**
  * User roles in the system

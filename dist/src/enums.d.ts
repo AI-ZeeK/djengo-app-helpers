@@ -149,7 +149,8 @@ export declare enum FILE_ENTITY_TYPE_ENUM {
     EMPLOYMENT_CONTRACT = "employment_contract",
     TAX_DOCUMENT = "tax_document",
     BANK_DETAILS = "bank_details",
-    RESUME = "resume"
+    RESUME = "resume",
+    FACILITY_LISTING_IMAGE = "facility_listing_image"
 }
 /**
  * User roles in the system
