@@ -24,6 +24,19 @@ export type RoleLevelUiChrome = {
 };
 export declare class AppHelper {
     private static algorithm;
+    /** Major currency units (e.g. NGN) → minor units (kobo/cents). */
+    static toMinorUnits(amount: number): number;
+    /** Minor units → major units for display. */
+    static fromMinorUnits(minor: number): number;
+    /** Detect protobufjs Long / `{ low, high }` int64 shapes. */
+    static isLongLike(obj: unknown): boolean;
+    /** Convert protobufjs Long / `{ low, high }` to a JS number (safe for money minor units). */
+    static longToNumber(obj: unknown): number;
+    /**
+     * Normalize gRPC/JSON int64 minor-unit fields that may arrive as number,
+     * string, or protobufjs Long `{ low, high, unsigned }`.
+     */
+    static coerceMinorUnits(value: unknown): number;
     static isDarkColor: (color: string | undefined) => boolean;
     private static relativeLuminanceChannel;
     /** WCAG 2.x relative luminance (0–1). */
@@ -125,10 +138,12 @@ export declare class AppHelper {
     static isEmptyOrNull<T extends object>(obj: T): T | null;
     /**
      * Converts object keys to snake_case recursively, and converts empty objects to null.
+     * Also unwraps protobuf int64 Long objects to plain numbers.
      */
     static toSnakeCase(obj: any): any;
     /**
      * Converts object keys to camelCase recursively, and converts empty objects to null.
+     * Also unwraps protobuf int64 Long objects to plain numbers.
      */
     static toCamelCase(obj: any): any;
     /**

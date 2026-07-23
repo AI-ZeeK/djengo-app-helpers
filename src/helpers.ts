@@ -103,6 +103,71 @@ export type RoleLevelUiChrome = {
 export class AppHelper {
   private static algorithm = "aes-256-cbc";
 
+  /** Major currency units (e.g. NGN) → minor units (kobo/cents). */
+  static toMinorUnits(amount: number): number {
+    return Math.round(amount * 100);
+  }
+
+  /** Minor units → major units for display. */
+  static fromMinorUnits(minor: number): number {
+    return minor / 100;
+  }
+
+  /** Detect protobufjs Long / `{ low, high }` int64 shapes. */
+  static isLongLike(obj: unknown): boolean {
+    if (obj === null || typeof obj !== "object" || Array.isArray(obj)) {
+      return false;
+    }
+    const o = obj as { low?: unknown; high?: unknown; toNumber?: unknown };
+    return (
+      typeof o.toNumber === "function" ||
+      ("low" in o && "high" in o)
+    );
+  }
+
+  /** Convert protobufjs Long / `{ low, high }` to a JS number (safe for money minor units). */
+  static longToNumber(obj: unknown): number {
+    if (obj == null) return 0;
+    if (typeof obj === "number" && Number.isFinite(obj)) return obj;
+    if (typeof obj === "object") {
+      const o = obj as {
+        low?: number;
+        high?: number;
+        toNumber?: () => number;
+      };
+      if (typeof o.toNumber === "function") {
+        const n = o.toNumber();
+        return Number.isFinite(n) ? n : 0;
+      }
+      if ("low" in o) {
+        // low is int32 bit pattern; unsigned low keeps signed int64 correct
+        const low = Number(o.low ?? 0) >>> 0;
+        const high = Number(o.high ?? 0) | 0;
+        return high * 4294967296 + low;
+      }
+    }
+    const n = Number(obj);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  /**
+   * Normalize gRPC/JSON int64 minor-unit fields that may arrive as number,
+   * string, or protobufjs Long `{ low, high, unsigned }`.
+   */
+  static coerceMinorUnits(value: unknown): number {
+    if (value == null) return 0;
+    if (typeof value === "number" && Number.isFinite(value)) return value;
+    if (typeof value === "string") {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 0;
+    }
+    if (AppHelper.isLongLike(value)) {
+      return AppHelper.longToNumber(value);
+    }
+    const n = Number(value);
+    return Number.isFinite(n) ? n : 0;
+  }
+
   static isDarkColor = (color: string | undefined) => {
     if (!color) return false;
 
@@ -680,10 +745,13 @@ export class AppHelper {
 
   /**
    * Converts object keys to snake_case recursively, and converts empty objects to null.
+   * Also unwraps protobuf int64 Long objects to plain numbers.
    */
   static toSnakeCase(obj: any): any {
     if (Array.isArray(obj)) {
       return obj.map(AppHelper.toSnakeCase);
+    } else if (AppHelper.isLongLike(obj)) {
+      return AppHelper.longToNumber(obj);
     } else if (obj !== null && typeof obj === "object") {
       const converted = Object.fromEntries(
         Object.entries(obj).map(([k, v]) => [
@@ -698,10 +766,13 @@ export class AppHelper {
 
   /**
    * Converts object keys to camelCase recursively, and converts empty objects to null.
+   * Also unwraps protobuf int64 Long objects to plain numbers.
    */
   static toCamelCase(obj: any): any {
     if (Array.isArray(obj)) {
       return obj.map(AppHelper.toCamelCase);
+    } else if (AppHelper.isLongLike(obj)) {
+      return AppHelper.longToNumber(obj);
     } else if (obj !== null && typeof obj === "object") {
       const converted = Object.fromEntries(
         Object.entries(obj).map(([k, v]) => [
