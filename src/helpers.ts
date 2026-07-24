@@ -108,9 +108,9 @@ export class AppHelper {
     return Math.round(amount * 100);
   }
 
-  /** Minor units → major units for display. */
-  static fromMinorUnits(minor: number): number {
-    return minor / 100;
+  /** Minor units → major units for display. Accepts number | string | Long-like. */
+  static fromMinorUnits(minor: unknown): number {
+    return AppHelper.coerceMinorUnits(minor) / 100;
   }
 
   /** Detect protobufjs Long / `{ low, high }` int64 shapes. */
