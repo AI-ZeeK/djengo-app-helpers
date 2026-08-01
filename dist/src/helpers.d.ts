@@ -26,8 +26,8 @@ export declare class AppHelper {
     private static algorithm;
     /** Major currency units (e.g. NGN) → minor units (kobo/cents). */
     static toMinorUnits(amount: number): number;
-    /** Minor units → major units for display. */
-    static fromMinorUnits(minor: number): number;
+    /** Minor units → major units for display. Accepts number | string | Long-like. */
+    static fromMinorUnits(minor: unknown): number;
     /** Detect protobufjs Long / `{ low, high }` int64 shapes. */
     static isLongLike(obj: unknown): boolean;
     /** Convert protobufjs Long / `{ low, high }` to a JS number (safe for money minor units). */

@@ -61,9 +61,9 @@ class AppHelper {
     static toMinorUnits(amount) {
         return Math.round(amount * 100);
     }
-    /** Minor units → major units for display. */
+    /** Minor units → major units for display. Accepts number | string | Long-like. */
     static fromMinorUnits(minor) {
-        return minor / 100;
+        return AppHelper.coerceMinorUnits(minor) / 100;
     }
     /** Detect protobufjs Long / `{ low, high }` int64 shapes. */
     static isLongLike(obj) {

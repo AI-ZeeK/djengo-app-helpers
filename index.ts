@@ -122,3 +122,4 @@ export { AppHelper } from "./src/helpers";
 export * from "./src/facility-enums";
 export * from "./src/facility-helpers";
 export * from "./src/admin-permissions";
+export * from "./src/permissions";

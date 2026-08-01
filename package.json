@@ -4,20 +4,19 @@
   "description": "Helper utilities and enums for Djengo proto contracts.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./index.js",
-      "require": "./index.js"
-    }
-  },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run gen:csharp",
+    "gen:csharp": "node scripts/gen-csharp.js",
+    "sync:dotnet": "bash scripts/sync-dotnet-shared.sh",
+    "check:dotnet": "bash scripts/sync-dotnet-shared.sh --check",
     "dev": "tsc --watch",
     "prepare": "husky install",
     "helpers": "npm run build && npm publish --access public"
   },
   "files": [
     "dist/",
+    "dotnet/",
+    "scripts/",
     "*.ts"
   ],
   "sideEffects": false,
@@ -54,6 +53,11 @@
       "import": "./dist/src/admin-permissions.js",
       "require": "./dist/src/admin-permissions.js",
       "types": "./dist/src/admin-permissions.d.ts"
+    },
+    "./permissions": {
+      "import": "./dist/src/permissions.js",
+      "require": "./dist/src/permissions.js",
+      "types": "./dist/src/permissions.d.ts"
     }
   }
 }

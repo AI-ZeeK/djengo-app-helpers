@@ -72,4 +72,5 @@ Object.defineProperty(exports, "AppHelper", { enumerable: true, get: function ()
 __exportStar(require("./src/facility-enums"), exports);
 __exportStar(require("./src/facility-helpers"), exports);
 __exportStar(require("./src/admin-permissions"), exports);
+__exportStar(require("./src/permissions"), exports);
 //# sourceMappingURL=index.js.map
