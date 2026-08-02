@@ -877,3 +877,38 @@ export function isPermissionName(value: string): value is PermissionName {
 export function canonicalPermissionName(value: string): string {
   return LEGACY_PERMISSION_RENAMES[value] ?? value;
 }
+
+/**
+ * Slugs of the two roles organization-service creates with every new
+ * organization, each holding the whole catalog above.
+ *
+ * They exist to break a chicken-and-egg problem: a new organization has no
+ * roles, and creating one is itself permission-gated. Both are ordinary roles
+ * once created — editable, renameable, deletable.
+ *
+ * The slugs are shared because organization-service writes them and
+ * profile-service reads them back to assign the creator. Duplicating the
+ * literal would let the two drift, and the failure is silent: the lookup
+ * returns nothing and the creator is left with no role at all.
+ */
+export const BOOTSTRAP_ROLE_SLUGS = {
+  /** Organization-wide admin, held by business users. Assigned to the creator. */
+  BUSINESS_ADMIN: "business-admin",
+  /** Company-wide admin, held by staff. Assigned to staff as they are onboarded. */
+  ADMIN_USER: "admin-user",
+} as const;
+
+export type BootstrapRoleSlug =
+  (typeof BOOTSTRAP_ROLE_SLUGS)[keyof typeof BOOTSTRAP_ROLE_SLUGS];
+
+/**
+ * Old bootstrap slug → current slug.
+ *
+ * Provisioning matches an existing role by slug, so a rename without this map
+ * would leave the old role in place and create a second one beside it. The
+ * organization-service provisioner renames in place instead, which keeps every
+ * staff assignment pointing at the same role_id.
+ */
+export const LEGACY_BOOTSTRAP_ROLE_SLUGS: Record<string, BootstrapRoleSlug> = {
+  "staff-admin": BOOTSTRAP_ROLE_SLUGS.ADMIN_USER,
+};

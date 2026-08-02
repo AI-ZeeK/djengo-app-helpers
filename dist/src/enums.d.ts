@@ -150,7 +150,9 @@ export declare enum FILE_ENTITY_TYPE_ENUM {
     TAX_DOCUMENT = "tax_document",
     BANK_DETAILS = "bank_details",
     RESUME = "resume",
-    FACILITY_LISTING_IMAGE = "facility_listing_image"
+    FACILITY_LISTING_IMAGE = "facility_listing_image",
+    /** Cover photo on a branch's public guest listing (browse cards). */
+    BRANCH_PUBLIC_LISTING_COVER = "branch_public_listing_cover"
 }
 /**
  * User roles in the system

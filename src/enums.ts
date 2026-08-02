@@ -164,6 +164,8 @@ export enum FILE_ENTITY_TYPE_ENUM {
   BANK_DETAILS = "bank_details",
   RESUME = "resume",
   FACILITY_LISTING_IMAGE = "facility_listing_image",
+  /** Cover photo on a branch's public guest listing (browse cards). */
+  BRANCH_PUBLIC_LISTING_COVER = "branch_public_listing_cover",
 }
 
 /**
