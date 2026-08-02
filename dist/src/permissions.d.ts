@@ -102,6 +102,8 @@ export declare enum PermissionName {
     VIEW_LEAVE = "view_leave",
     MANAGE_LEAVE = "manage_leave",
     APPROVE_LEAVE = "approve_leave",
+    VIEW_LEAVE_POLICY = "view_leave_policy",
+    MANAGE_LEAVE_POLICY = "manage_leave_policy",
     VIEW_CALENDAR_EVENTS = "view_calendar_events",
     MANAGE_CALENDAR_EVENTS = "manage_calendar_events",
     VIEW_APPROVALS = "view_approvals",

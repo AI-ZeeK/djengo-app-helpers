@@ -118,6 +118,8 @@ var PermissionName;
     PermissionName["VIEW_LEAVE"] = "view_leave";
     PermissionName["MANAGE_LEAVE"] = "manage_leave";
     PermissionName["APPROVE_LEAVE"] = "approve_leave";
+    PermissionName["VIEW_LEAVE_POLICY"] = "view_leave_policy";
+    PermissionName["MANAGE_LEAVE_POLICY"] = "manage_leave_policy";
     PermissionName["VIEW_CALENDAR_EVENTS"] = "view_calendar_events";
     PermissionName["MANAGE_CALENDAR_EVENTS"] = "manage_calendar_events";
     // ── Approvals ─────────────────────────────────────────────────────────────
@@ -264,6 +266,8 @@ const GENERAL_PERMISSIONS = define('STAFF', [
     [P.VIEW_LEAVE, 1, 'View leave requests and balances'],
     [P.MANAGE_LEAVE, 2, 'Submit and manage leave requests'],
     [P.APPROVE_LEAVE, 3, 'Approve or decline leave requests'],
+    [P.VIEW_LEAVE_POLICY, 1, 'View company leave policies'],
+    [P.MANAGE_LEAVE_POLICY, 2, 'Create and update leave policies'],
     [P.VIEW_CALENDAR_EVENTS, 1, 'View the company calendar'],
     [P.MANAGE_CALENDAR_EVENTS, 2, 'Create and edit calendar events'],
     // Approvals
@@ -636,11 +640,17 @@ exports.PERMISSION_GROUPS = [
     },
     {
         group_name: 'Leave Management',
-        description: 'Leave requests, balances and approvals',
+        description: 'Leave requests, balances, policies and approvals',
         level: 1,
         category: 'STAFF',
         group_type: 'STAFF_MANAGEMENT',
-        permissions: [P.VIEW_LEAVE, P.MANAGE_LEAVE, P.APPROVE_LEAVE],
+        permissions: [
+            P.VIEW_LEAVE,
+            P.MANAGE_LEAVE,
+            P.APPROVE_LEAVE,
+            P.VIEW_LEAVE_POLICY,
+            P.MANAGE_LEAVE_POLICY,
+        ],
     },
     {
         group_name: 'Calendar & Events',
@@ -652,11 +662,15 @@ exports.PERMISSION_GROUPS = [
     },
     {
         group_name: 'Approvals',
-        description: 'Approval inbox for requests routed to this role',
+        description: 'Approval inbox and optional chain configuration for staff roles',
         level: 1,
         category: 'STAFF',
         group_type: 'OPERATIONS',
-        permissions: [P.VIEW_APPROVALS, P.MANAGE_APPROVALS],
+        permissions: [
+            P.VIEW_APPROVALS,
+            P.MANAGE_APPROVALS,
+            P.MANAGE_APPROVAL_CHAINS,
+        ],
     },
     {
         group_name: 'Communication',

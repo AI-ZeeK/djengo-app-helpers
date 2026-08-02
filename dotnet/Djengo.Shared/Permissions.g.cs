@@ -158,6 +158,10 @@ public static class Permissions
     public const string ManageLeave = "manage_leave";
     /// <summary>Approve or decline leave requests</summary>
     public const string ApproveLeave = "approve_leave";
+    /// <summary>View company leave policies</summary>
+    public const string ViewLeavePolicy = "view_leave_policy";
+    /// <summary>Create and update leave policies</summary>
+    public const string ManageLeavePolicy = "manage_leave_policy";
     /// <summary>View the company calendar</summary>
     public const string ViewCalendarEvents = "view_calendar_events";
     /// <summary>Create and edit calendar events</summary>
@@ -319,6 +323,8 @@ public static class Permissions
         ViewLeave,
         ManageLeave,
         ApproveLeave,
+        ViewLeavePolicy,
+        ManageLeavePolicy,
         ViewCalendarEvents,
         ManageCalendarEvents,
         ViewApprovals,

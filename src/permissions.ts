@@ -120,6 +120,8 @@ export enum PermissionName {
   VIEW_LEAVE = 'view_leave',
   MANAGE_LEAVE = 'manage_leave',
   APPROVE_LEAVE = 'approve_leave',
+  VIEW_LEAVE_POLICY = 'view_leave_policy',
+  MANAGE_LEAVE_POLICY = 'manage_leave_policy',
   VIEW_CALENDAR_EVENTS = 'view_calendar_events',
   MANAGE_CALENDAR_EVENTS = 'manage_calendar_events',
 
@@ -334,6 +336,8 @@ const GENERAL_PERMISSIONS: PermissionDef[] = define('STAFF', [
   [P.VIEW_LEAVE, 1, 'View leave requests and balances'],
   [P.MANAGE_LEAVE, 2, 'Submit and manage leave requests'],
   [P.APPROVE_LEAVE, 3, 'Approve or decline leave requests'],
+  [P.VIEW_LEAVE_POLICY, 1, 'View company leave policies'],
+  [P.MANAGE_LEAVE_POLICY, 2, 'Create and update leave policies'],
   [P.VIEW_CALENDAR_EVENTS, 1, 'View the company calendar'],
   [P.MANAGE_CALENDAR_EVENTS, 2, 'Create and edit calendar events'],
 
@@ -717,11 +721,17 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
   },
   {
     group_name: 'Leave Management',
-    description: 'Leave requests, balances and approvals',
+    description: 'Leave requests, balances, policies and approvals',
     level: 1,
     category: 'STAFF',
     group_type: 'STAFF_MANAGEMENT',
-    permissions: [P.VIEW_LEAVE, P.MANAGE_LEAVE, P.APPROVE_LEAVE],
+    permissions: [
+      P.VIEW_LEAVE,
+      P.MANAGE_LEAVE,
+      P.APPROVE_LEAVE,
+      P.VIEW_LEAVE_POLICY,
+      P.MANAGE_LEAVE_POLICY,
+    ],
   },
   {
     group_name: 'Calendar & Events',
@@ -733,11 +743,16 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
   },
   {
     group_name: 'Approvals',
-    description: 'Approval inbox for requests routed to this role',
+    description:
+      'Approval inbox and optional chain configuration for staff roles',
     level: 1,
     category: 'STAFF',
     group_type: 'OPERATIONS',
-    permissions: [P.VIEW_APPROVALS, P.MANAGE_APPROVALS],
+    permissions: [
+      P.VIEW_APPROVALS,
+      P.MANAGE_APPROVALS,
+      P.MANAGE_APPROVAL_CHAINS,
+    ],
   },
   {
     group_name: 'Communication',
