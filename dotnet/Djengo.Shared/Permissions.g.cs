@@ -20,227 +20,227 @@ namespace Djengo.Shared;
 public static class Permissions
 {
     // BUSINESS_USER
-    /// <summary>Manage organization profile and settings</summary>
+    /// <summary>Manage organization</summary>
     public const string ManageOrganization = "manage_organization";
     /// <summary>View settings</summary>
     public const string ViewSettings = "view_settings";
-    /// <summary>Change settings</summary>
+    /// <summary>Manage settings</summary>
     public const string ManageSettings = "manage_settings";
-    /// <summary>View companies in the organization</summary>
+    /// <summary>View companies</summary>
     public const string ViewCompanies = "view_companies";
-    /// <summary>Create and update companies</summary>
+    /// <summary>Manage companies</summary>
     public const string ManageCompanies = "manage_companies";
     /// <summary>View branches</summary>
     public const string ViewBranches = "view_branches";
-    /// <summary>Create and update branches</summary>
+    /// <summary>Manage branches</summary>
     public const string ManageBranches = "manage_branches";
-    /// <summary>Restrict which branches a role can reach</summary>
+    /// <summary>Restrict branch access</summary>
     public const string RestrictBranchAccess = "restrict_branch_access";
-    /// <summary>View departments and designations</summary>
+    /// <summary>View departments</summary>
     public const string ViewDepartments = "view_departments";
-    /// <summary>Create and update departments and designations</summary>
+    /// <summary>Manage departments</summary>
     public const string ManageDepartments = "manage_departments";
-    /// <summary>View roles and role levels</summary>
+    /// <summary>View roles</summary>
     public const string ViewRoles = "view_roles";
-    /// <summary>Create roles and assign permissions</summary>
+    /// <summary>Manage roles</summary>
     public const string ManageRoles = "manage_roles";
-    /// <summary>View partner companies</summary>
+    /// <summary>View partners</summary>
     public const string ViewPartners = "view_partners";
-    /// <summary>Onboard and manage partner companies</summary>
+    /// <summary>Manage partners</summary>
     public const string ManagePartners = "manage_partners";
-    /// <summary>View staff records across the organization</summary>
+    /// <summary>View staff</summary>
     public const string ViewStaff = "view_staff";
-    /// <summary>Onboard, update and offboard staff</summary>
+    /// <summary>Manage staff</summary>
     public const string ManageStaff = "manage_staff";
-    /// <summary>Send and revoke staff invitations</summary>
+    /// <summary>Manage invitations</summary>
     public const string ManageInvitations = "manage_invitations";
-    /// <summary>View audit logs</summary>
+    /// <summary>View audit</summary>
     public const string ViewAudit = "view_audit";
-    /// <summary>Manage audit and compliance settings</summary>
+    /// <summary>Manage audit</summary>
     public const string ManageAudit = "manage_audit";
 
     // DEPARTMENT
-    /// <summary>Open kitchen pages</summary>
+    /// <summary>Access kitchen</summary>
     public const string AccessKitchen = "access_kitchen";
-    /// <summary>Manage kitchen operations and menu</summary>
+    /// <summary>Manage kitchen</summary>
     public const string ManageKitchen = "manage_kitchen";
-    /// <summary>Open reception pages</summary>
+    /// <summary>Access reception</summary>
     public const string AccessReception = "access_reception";
-    /// <summary>Manage reception operations</summary>
+    /// <summary>Manage reception</summary>
     public const string ManageReception = "manage_reception";
-    /// <summary>Open hotel pages</summary>
+    /// <summary>Access hotel</summary>
     public const string AccessHotel = "access_hotel";
-    /// <summary>Manage hotel operations</summary>
+    /// <summary>Manage hotel</summary>
     public const string ManageHotel = "manage_hotel";
-    /// <summary>Open restaurant pages</summary>
+    /// <summary>Access restaurant</summary>
     public const string AccessRestaurant = "access_restaurant";
-    /// <summary>Manage restaurant operations</summary>
+    /// <summary>Manage restaurant</summary>
     public const string ManageRestaurant = "manage_restaurant";
 
     // STAFF
-    /// <summary>View the dashboard</summary>
+    /// <summary>View dashboard</summary>
     public const string ViewDashboard = "view_dashboard";
-    /// <summary>View own profile</summary>
+    /// <summary>View profile</summary>
     public const string ViewProfile = "view_profile";
-    /// <summary>Edit own profile</summary>
+    /// <summary>Manage profile</summary>
     public const string ManageProfile = "manage_profile";
-    /// <summary>Open branch pages</summary>
+    /// <summary>Access branch</summary>
     public const string AccessBranch = "access_branch";
-    /// <summary>Manage branch settings</summary>
+    /// <summary>Manage branch</summary>
     public const string ManageBranch = "manage_branch";
-    /// <summary>Work across every branch in the company</summary>
+    /// <summary>View all branches</summary>
     public const string ViewAllBranches = "view_all_branches";
-    /// <summary>View staff at other branches</summary>
+    /// <summary>View branch staff</summary>
     public const string ViewBranchStaff = "view_branch_staff";
-    /// <summary>View leave at other branches</summary>
+    /// <summary>View branch leave</summary>
     public const string ViewBranchLeave = "view_branch_leave";
-    /// <summary>View approvals at other branches</summary>
+    /// <summary>View branch approvals</summary>
     public const string ViewBranchApprovals = "view_branch_approvals";
-    /// <summary>View payroll and financials at other branches</summary>
+    /// <summary>View branch financials</summary>
     public const string ViewBranchFinancials = "view_branch_financials";
-    /// <summary>View shifts at other branches</summary>
+    /// <summary>View branch shifts</summary>
     public const string ViewBranchShifts = "view_branch_shifts";
-    /// <summary>View tasks at other branches</summary>
+    /// <summary>View branch tasks</summary>
     public const string ViewBranchTasks = "view_branch_tasks";
-    /// <summary>View reception at other branches</summary>
+    /// <summary>View branch reception</summary>
     public const string ViewBranchReception = "view_branch_reception";
-    /// <summary>View facility at other branches</summary>
+    /// <summary>View branch facility</summary>
     public const string ViewBranchFacility = "view_branch_facility";
-    /// <summary>View facility layout and occupancy</summary>
+    /// <summary>Access facility</summary>
     public const string AccessFacility = "access_facility";
-    /// <summary>Manage facility layout and occupancy</summary>
+    /// <summary>Manage facility</summary>
     public const string ManageFacility = "manage_facility";
-    /// <summary>View operational data</summary>
+    /// <summary>View operations</summary>
     public const string ViewOperations = "view_operations";
     /// <summary>Manage operations</summary>
     public const string ManageOperations = "manage_operations";
-    /// <summary>View assigned tasks</summary>
+    /// <summary>View tasks</summary>
     public const string ViewTasks = "view_tasks";
-    /// <summary>Create and assign tasks</summary>
+    /// <summary>Manage tasks</summary>
     public const string ManageTasks = "manage_tasks";
     /// <summary>View inventory</summary>
     public const string ViewInventory = "view_inventory";
-    /// <summary>Adjust inventory</summary>
+    /// <summary>Manage inventory</summary>
     public const string ManageInventory = "manage_inventory";
     /// <summary>View assets</summary>
     public const string ViewAssets = "view_assets";
     /// <summary>Manage assets</summary>
     public const string ManageAssets = "manage_assets";
-    /// <summary>View bookings and reservations</summary>
+    /// <summary>View reservations</summary>
     public const string ViewReservations = "view_reservations";
-    /// <summary>Create, edit and check in bookings</summary>
+    /// <summary>Manage reservations</summary>
     public const string ManageReservations = "manage_reservations";
-    /// <summary>Approve or decline booking requests</summary>
+    /// <summary>Approve reservations</summary>
     public const string ApproveReservations = "approve_reservations";
-    /// <summary>View guest profiles</summary>
+    /// <summary>View guests</summary>
     public const string ViewGuests = "view_guests";
-    /// <summary>Create and edit guest profiles</summary>
+    /// <summary>Manage guests</summary>
     public const string ManageGuests = "manage_guests";
-    /// <summary>View work schedule</summary>
+    /// <summary>View schedule</summary>
     public const string ViewSchedule = "view_schedule";
-    /// <summary>Create and edit schedules</summary>
+    /// <summary>Manage schedule</summary>
     public const string ManageSchedule = "manage_schedule";
     /// <summary>View shifts</summary>
     public const string ViewShifts = "view_shifts";
-    /// <summary>Create and assign shifts</summary>
+    /// <summary>Manage shifts</summary>
     public const string ManageShifts = "manage_shifts";
-    /// <summary>View time tracking records</summary>
+    /// <summary>View time</summary>
     public const string ViewTime = "view_time";
-    /// <summary>Manage time and attendance records</summary>
+    /// <summary>Manage time</summary>
     public const string ManageTime = "manage_time";
     /// <summary>View attendance</summary>
     public const string ViewAttendance = "view_attendance";
-    /// <summary>Record and correct attendance</summary>
+    /// <summary>Manage attendance</summary>
     public const string ManageAttendance = "manage_attendance";
-    /// <summary>View leave requests and balances</summary>
+    /// <summary>View leave</summary>
     public const string ViewLeave = "view_leave";
-    /// <summary>Submit and manage leave requests</summary>
+    /// <summary>Manage leave</summary>
     public const string ManageLeave = "manage_leave";
-    /// <summary>Approve or decline leave requests</summary>
+    /// <summary>Approve leave</summary>
     public const string ApproveLeave = "approve_leave";
-    /// <summary>View company leave policies</summary>
+    /// <summary>View leave policy</summary>
     public const string ViewLeavePolicy = "view_leave_policy";
-    /// <summary>Create and update leave policies</summary>
+    /// <summary>Manage leave policy</summary>
     public const string ManageLeavePolicy = "manage_leave_policy";
-    /// <summary>View the company calendar</summary>
+    /// <summary>View calendar</summary>
     public const string ViewCalendarEvents = "view_calendar_events";
-    /// <summary>Create and edit calendar events</summary>
+    /// <summary>Manage calendar</summary>
     public const string ManageCalendarEvents = "manage_calendar_events";
-    /// <summary>View approval requests</summary>
+    /// <summary>View approvals</summary>
     public const string ViewApprovals = "view_approvals";
-    /// <summary>Act on approval requests routed to the role</summary>
+    /// <summary>Manage approvals</summary>
     public const string ManageApprovals = "manage_approvals";
-    /// <summary>Configure approval chains and steps</summary>
+    /// <summary>Manage approval chains</summary>
     public const string ManageApprovalChains = "manage_approval_chains";
-    /// <summary>View messages and announcements</summary>
+    /// <summary>View communication</summary>
     public const string ViewCommunication = "view_communication";
-    /// <summary>Send and manage communications</summary>
+    /// <summary>Manage communication</summary>
     public const string ManageCommunication = "manage_communication";
-    /// <summary>View complaints and support tickets</summary>
+    /// <summary>View complaints</summary>
     public const string ViewComplaints = "view_complaints";
-    /// <summary>Respond to and resolve complaints</summary>
+    /// <summary>Manage complaints</summary>
     public const string ManageComplaints = "manage_complaints";
-    /// <summary>View other staff profiles</summary>
+    /// <summary>View staff profiles</summary>
     public const string ViewStaffProfiles = "view_staff_profiles";
-    /// <summary>Edit other staff profiles</summary>
+    /// <summary>Manage staff profiles</summary>
     public const string ManageStaffProfiles = "manage_staff_profiles";
-    /// <summary>View contracts, documents and performance records</summary>
+    /// <summary>View HR records</summary>
     public const string ViewHrRecords = "view_hr_records";
-    /// <summary>Manage contracts, documents and performance records</summary>
+    /// <summary>Manage HR records</summary>
     public const string ManageHrRecords = "manage_hr_records";
-    /// <summary>View financial summaries</summary>
+    /// <summary>View finances</summary>
     public const string ViewFinances = "view_finances";
-    /// <summary>Manage financial settings</summary>
+    /// <summary>Manage finances</summary>
     public const string ManageFinances = "manage_finances";
-    /// <summary>View invoices and remittances</summary>
+    /// <summary>View invoices</summary>
     public const string ViewInvoices = "view_invoices";
-    /// <summary>Issue and update invoices</summary>
+    /// <summary>Manage invoices</summary>
     public const string ManageInvoices = "manage_invoices";
-    /// <summary>Configure billing policies</summary>
+    /// <summary>Manage billing policy</summary>
     public const string ManageBillingPolicy = "manage_billing_policy";
-    /// <summary>View vendors, requisitions and purchase orders</summary>
+    /// <summary>View procurement</summary>
     public const string ViewProcurement = "view_procurement";
-    /// <summary>Raise and manage procurement documents</summary>
+    /// <summary>Manage procurement</summary>
     public const string ManageProcurement = "manage_procurement";
-    /// <summary>Approve purchase requests and orders</summary>
+    /// <summary>Approve procurement</summary>
     public const string ApproveProcurement = "approve_procurement";
-    /// <summary>View payroll records</summary>
+    /// <summary>View payrolls</summary>
     public const string ViewPayrolls = "view_payrolls";
-    /// <summary>Manage payroll entries</summary>
+    /// <summary>Manage payrolls</summary>
     public const string ManagePayrolls = "manage_payrolls";
-    /// <summary>Approve payroll runs</summary>
+    /// <summary>Approve payrolls</summary>
     public const string ApprovePayrolls = "approve_payrolls";
-    /// <summary>Release payroll for payment</summary>
+    /// <summary>Send payroll</summary>
     public const string SendPayroll = "send_payroll";
     /// <summary>View payroll reports</summary>
     public const string ViewPayrollReports = "view_payroll_reports";
-    /// <summary>Configure payroll schedules</summary>
+    /// <summary>Manage payroll schedules</summary>
     public const string ManagePayrollSchedules = "manage_payroll_schedules";
     /// <summary>View monthly budgets</summary>
     public const string ViewMonthlyBudgets = "view_monthly_budgets";
-    /// <summary>Create and edit monthly budgets</summary>
+    /// <summary>Manage monthly budgets</summary>
     public const string ManageMonthlyBudgets = "manage_monthly_budgets";
     /// <summary>Approve monthly budgets</summary>
     public const string ApproveMonthlyBudgets = "approve_monthly_budgets";
-    /// <summary>View the branch budget</summary>
+    /// <summary>View branch budget</summary>
     public const string ViewBranchBudget = "view_branch_budget";
-    /// <summary>View branch fund allocations</summary>
+    /// <summary>View branch allocations</summary>
     public const string ViewBranchAllocations = "view_branch_allocations";
-    /// <summary>Manage branch fund allocations</summary>
+    /// <summary>Manage branch allocations</summary>
     public const string ManageBranchAllocations = "manage_branch_allocations";
-    /// <summary>Approve branch fund allocations</summary>
+    /// <summary>Approve branch allocations</summary>
     public const string ApproveBranchAllocations = "approve_branch_allocations";
-    /// <summary>View fund allocations</summary>
+    /// <summary>View allocations</summary>
     public const string ViewAllocations = "view_allocations";
-    /// <summary>Manage fund allocations</summary>
+    /// <summary>Manage allocations</summary>
     public const string ManageAllocations = "manage_allocations";
-    /// <summary>Submit fund requests</summary>
+    /// <summary>Request funds</summary>
     public const string RequestFunds = "request_funds";
     /// <summary>View fund requests</summary>
     public const string ViewFundRequests = "view_fund_requests";
     /// <summary>Approve fund requests</summary>
     public const string ApproveFundRequests = "approve_fund_requests";
-    /// <summary>Submit extra fund requests</summary>
+    /// <summary>Request extra funds</summary>
     public const string RequestExtraFunds = "request_extra_funds";
     /// <summary>View extra fund requests</summary>
     public const string ViewExtraFundRequests = "view_extra_fund_requests";
