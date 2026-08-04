@@ -16,6 +16,7 @@ exports.OCCUPIABLE_FACILITY_NODE_TYPES = [
     facility_enums_1.FACILITY_NODE_TYPE_ENUM.BED,
     facility_enums_1.FACILITY_NODE_TYPE_ENUM.ROOM,
     facility_enums_1.FACILITY_NODE_TYPE_ENUM.TABLE,
+    facility_enums_1.FACILITY_NODE_TYPE_ENUM.CHAIR,
     facility_enums_1.FACILITY_NODE_TYPE_ENUM.HOUSE,
     facility_enums_1.FACILITY_NODE_TYPE_ENUM.UNIT,
     facility_enums_1.FACILITY_NODE_TYPE_ENUM.SECTION,
@@ -24,6 +25,7 @@ const NODE_TYPE_TO_ASSET_KIND = {
     [facility_enums_1.FACILITY_NODE_TYPE_ENUM.BED]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_BED,
     [facility_enums_1.FACILITY_NODE_TYPE_ENUM.ROOM]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_ROOM,
     [facility_enums_1.FACILITY_NODE_TYPE_ENUM.TABLE]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_TABLE,
+    [facility_enums_1.FACILITY_NODE_TYPE_ENUM.CHAIR]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_CHAIR,
     [facility_enums_1.FACILITY_NODE_TYPE_ENUM.HOUSE]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_HOUSE,
     [facility_enums_1.FACILITY_NODE_TYPE_ENUM.UNIT]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_UNIT,
     [facility_enums_1.FACILITY_NODE_TYPE_ENUM.SECTION]: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_SECTION,
@@ -37,6 +39,7 @@ const FACILITY_ASSET_KIND_BY_NUMBER = {
     4: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_HOUSE,
     5: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_UNIT,
     6: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_SECTION,
+    7: facility_enums_1.FACILITY_ASSET_KIND_ENUM.ASSET_KIND_CHAIR,
 };
 /** Normalize API/proto asset kind (number, "1", ASSET_KIND_BED) to string enum. */
 function normalizeFacilityAssetKind(value) {
@@ -83,6 +86,8 @@ function defaultFacilityAssetCapacity(nodeType, facilityMode = facility_enums_1.
             return 1;
         case facility_enums_1.FACILITY_NODE_TYPE_ENUM.TABLE:
             return 4;
+        case facility_enums_1.FACILITY_NODE_TYPE_ENUM.CHAIR:
+            return 1;
         case facility_enums_1.FACILITY_NODE_TYPE_ENUM.ROOM:
             return facilityMode === facility_enums_1.FACILITY_MODE_ENUM.HOSPITAL ? 1 : 2;
         case facility_enums_1.FACILITY_NODE_TYPE_ENUM.HOUSE:

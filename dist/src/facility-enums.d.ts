@@ -27,7 +27,14 @@ export declare enum FACILITY_NODE_TYPE_ENUM {
     ZONE = "ZONE",
     SECTION = "SECTION",
     SITE = "SITE",
+    CHAIR = "CHAIR",
     BAR = "BAR"
+}
+/** Matches facility.proto FacilityHierarchyDomain */
+export declare enum FACILITY_HIERARCHY_DOMAIN_ENUM {
+    FACILITY_HIERARCHY_DOMAIN_UNSPECIFIED = "FACILITY_HIERARCHY_DOMAIN_UNSPECIFIED",
+    PRIMARY = "PRIMARY",
+    DINING = "DINING"
 }
 /** Matches facility.proto FacilityAssetKind */
 export declare enum FACILITY_ASSET_KIND_ENUM {
@@ -37,7 +44,8 @@ export declare enum FACILITY_ASSET_KIND_ENUM {
     ASSET_KIND_TABLE = "ASSET_KIND_TABLE",
     ASSET_KIND_HOUSE = "ASSET_KIND_HOUSE",
     ASSET_KIND_UNIT = "ASSET_KIND_UNIT",
-    ASSET_KIND_SECTION = "ASSET_KIND_SECTION"
+    ASSET_KIND_SECTION = "ASSET_KIND_SECTION",
+    ASSET_KIND_CHAIR = "ASSET_KIND_CHAIR"
 }
 /** Matches facility.proto FacilityStatus */
 export declare enum FACILITY_STATUS_ENUM {
@@ -103,6 +111,7 @@ export declare enum OCCUPANT_CONTACT_ROLE_ENUM {
 export type FacilityMode = Exclude<`${FACILITY_MODE_ENUM}`, `${FACILITY_MODE_ENUM.FACILITY_MODE_UNSPECIFIED}`>;
 /** Includes `FACILITY_NODE_TYPE_UNSPECIFIED` for raw API / mapper fallbacks. */
 export type FacilityNodeType = `${FACILITY_NODE_TYPE_ENUM}`;
+export type FacilityHierarchyDomain = Exclude<`${FACILITY_HIERARCHY_DOMAIN_ENUM}`, `${FACILITY_HIERARCHY_DOMAIN_ENUM.FACILITY_HIERARCHY_DOMAIN_UNSPECIFIED}`>;
 export type FacilityAssetKind = `${FACILITY_ASSET_KIND_ENUM}`;
 export type BedTypeValue = BED_TYPE_ENUM | "";
 export type RoomClassValue = ROOM_CLASS_ENUM | "";
