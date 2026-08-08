@@ -121,6 +121,7 @@ export declare enum PARTNER_TYPE {
 }
 export * from "./facility-enums";
 export * from "./facility-helpers";
+export * from "./financial-enums";
 export declare enum ADDRESS_TYPE_ENUM {
     USER_HOME = "user_home",
     USER_WORK = "user_work",
@@ -152,7 +153,11 @@ export declare enum FILE_ENTITY_TYPE_ENUM {
     RESUME = "resume",
     FACILITY_LISTING_IMAGE = "facility_listing_image",
     /** Cover photo on a branch's public guest listing (browse cards). */
-    BRANCH_PUBLIC_LISTING_COVER = "branch_public_listing_cover"
+    BRANCH_PUBLIC_LISTING_COVER = "branch_public_listing_cover",
+    /** Guest/tenant booking contracts and acknowledgements. */
+    ENGAGEMENT_DOCUMENT = "engagement_document",
+    /** Hospital clinical attachments (notes, prescriptions, labs). */
+    CLINICAL_DOCUMENT = "clinical_document"
 }
 /**
  * User roles in the system

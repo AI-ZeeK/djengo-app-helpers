@@ -132,6 +132,7 @@ export enum PARTNER_TYPE {
 
 export * from "./facility-enums";
 export * from "./facility-helpers";
+export * from "./financial-enums";
 
 export enum ADDRESS_TYPE_ENUM {
   USER_HOME = "user_home",
@@ -166,6 +167,10 @@ export enum FILE_ENTITY_TYPE_ENUM {
   FACILITY_LISTING_IMAGE = "facility_listing_image",
   /** Cover photo on a branch's public guest listing (browse cards). */
   BRANCH_PUBLIC_LISTING_COVER = "branch_public_listing_cover",
+  /** Guest/tenant booking contracts and acknowledgements. */
+  ENGAGEMENT_DOCUMENT = "engagement_document",
+  /** Hospital clinical attachments (notes, prescriptions, labs). */
+  CLINICAL_DOCUMENT = "clinical_document",
 }
 
 /**
@@ -308,3 +313,5 @@ export enum PermissionRestriction {
   RESTRICT_FUND_MANAGEMENT = "RESTRICT_FUND_MANAGEMENT",
   RESTRICT_FUND_APPROVAL = "RESTRICT_FUND_APPROVAL",
 }
+
+

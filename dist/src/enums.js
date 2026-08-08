@@ -150,6 +150,7 @@ var PARTNER_TYPE;
 })(PARTNER_TYPE || (exports.PARTNER_TYPE = PARTNER_TYPE = {}));
 __exportStar(require("./facility-enums"), exports);
 __exportStar(require("./facility-helpers"), exports);
+__exportStar(require("./financial-enums"), exports);
 var ADDRESS_TYPE_ENUM;
 (function (ADDRESS_TYPE_ENUM) {
     ADDRESS_TYPE_ENUM["USER_HOME"] = "user_home";
@@ -184,6 +185,10 @@ var FILE_ENTITY_TYPE_ENUM;
     FILE_ENTITY_TYPE_ENUM["FACILITY_LISTING_IMAGE"] = "facility_listing_image";
     /** Cover photo on a branch's public guest listing (browse cards). */
     FILE_ENTITY_TYPE_ENUM["BRANCH_PUBLIC_LISTING_COVER"] = "branch_public_listing_cover";
+    /** Guest/tenant booking contracts and acknowledgements. */
+    FILE_ENTITY_TYPE_ENUM["ENGAGEMENT_DOCUMENT"] = "engagement_document";
+    /** Hospital clinical attachments (notes, prescriptions, labs). */
+    FILE_ENTITY_TYPE_ENUM["CLINICAL_DOCUMENT"] = "clinical_document";
 })(FILE_ENTITY_TYPE_ENUM || (exports.FILE_ENTITY_TYPE_ENUM = FILE_ENTITY_TYPE_ENUM = {}));
 /**
  * User roles in the system
