@@ -57,14 +57,14 @@ export enum PermissionName {
   VIEW_AUDIT = 'view_audit',
   MANAGE_AUDIT = 'manage_audit',
 
-  // ── Department page access ────────────────────────────────────────────────
-  ACCESS_KITCHEN = 'access_kitchen',
+  // ── Department page access (view opens the page; manage edits) ────────────
+  VIEW_KITCHEN = 'view_kitchen',
   MANAGE_KITCHEN = 'manage_kitchen',
-  ACCESS_RECEPTION = 'access_reception',
+  VIEW_RECEPTION = 'view_reception',
   MANAGE_RECEPTION = 'manage_reception',
-  ACCESS_HOTEL = 'access_hotel',
+  VIEW_HOTEL = 'view_hotel',
   MANAGE_HOTEL = 'manage_hotel',
-  ACCESS_RESTAURANT = 'access_restaurant',
+  VIEW_RESTAURANT = 'view_restaurant',
   MANAGE_RESTAURANT = 'manage_restaurant',
 
   // ── Dashboard & profile ───────────────────────────────────────────────────
@@ -75,7 +75,7 @@ export enum PermissionName {
   // ── Branch access ─────────────────────────────────────────────────────────
   // The `view_branch_*` slugs widen a scope to other branches; they map to
   // BranchPermissionScope in organization-service/branch-scope-permissions.util.ts.
-  ACCESS_BRANCH = 'access_branch',
+  VIEW_BRANCH = 'view_branch',
   MANAGE_BRANCH = 'manage_branch',
   VIEW_ALL_BRANCHES = 'view_all_branches',
   VIEW_BRANCH_STAFF = 'view_branch_staff',
@@ -88,7 +88,7 @@ export enum PermissionName {
   VIEW_BRANCH_FACILITY = 'view_branch_facility',
 
   // ── Facility ──────────────────────────────────────────────────────────────
-  ACCESS_FACILITY = 'access_facility',
+  VIEW_FACILITY = 'view_facility',
   MANAGE_FACILITY = 'manage_facility',
 
   // ── Operations, tasks, stock ──────────────────────────────────────────────
@@ -136,23 +136,37 @@ export enum PermissionName {
   VIEW_COMPLAINTS = 'view_complaints',
   MANAGE_COMPLAINTS = 'manage_complaints',
 
-  // ── HR ────────────────────────────────────────────────────────────────────
+  // ── HR (page-level — not one mega “HR records” gate) ──────────────────────
   VIEW_STAFF_PROFILES = 'view_staff_profiles',
   MANAGE_STAFF_PROFILES = 'manage_staff_profiles',
-  VIEW_HR_RECORDS = 'view_hr_records',
-  MANAGE_HR_RECORDS = 'manage_hr_records',
+  VIEW_HR_DOCUMENTS = 'view_hr_documents',
+  MANAGE_HR_DOCUMENTS = 'manage_hr_documents',
+  VIEW_HR_PERFORMANCE = 'view_hr_performance',
+  MANAGE_HR_PERFORMANCE = 'manage_hr_performance',
 
-  // ── Financials ────────────────────────────────────────────────────────────
-  VIEW_FINANCES = 'view_finances',
-  MANAGE_FINANCES = 'manage_finances',
+  // ── Financials (page-level — not one mega “finances” gate) ─────────────────
+  VIEW_FINANCIAL_ANALYTICS = 'view_financial_analytics',
+  MANAGE_FINANCIAL_ANALYTICS = 'manage_financial_analytics',
+  VIEW_COMPANY_FUNDS = 'view_company_funds',
+  MANAGE_COMPANY_FUNDS = 'manage_company_funds',
+  VIEW_FINANCIAL_PERIODS = 'view_financial_periods',
+  MANAGE_FINANCIAL_PERIODS = 'manage_financial_periods',
+  VIEW_TRANSACTIONS = 'view_transactions',
+  MANAGE_TRANSACTIONS = 'manage_transactions',
+  VIEW_REMITTANCES = 'view_remittances',
+  MANAGE_REMITTANCES = 'manage_remittances',
+  VIEW_VARIANCE_REPORTS = 'view_variance_reports',
   VIEW_INVOICES = 'view_invoices',
   MANAGE_INVOICES = 'manage_invoices',
+  VIEW_BILLING_POLICY = 'view_billing_policy',
   MANAGE_BILLING_POLICY = 'manage_billing_policy',
   VIEW_PROCUREMENT = 'view_procurement',
   MANAGE_PROCUREMENT = 'manage_procurement',
   APPROVE_PROCUREMENT = 'approve_procurement',
 
   // ── Payroll ───────────────────────────────────────────────────────────────
+  // approve_payrolls marks which roles may sit on payroll approval-chain steps
+  // (events ApprovalChainService). send_payroll covers mark-paid / bank export.
   VIEW_PAYROLLS = 'view_payrolls',
   MANAGE_PAYROLLS = 'manage_payrolls',
   APPROVE_PAYROLLS = 'approve_payrolls',
@@ -272,13 +286,13 @@ const ORGANIZATION_PERMISSIONS: PermissionDef[] = define('BUSINESS_USER', [
 // comes from the general staff set.
 
 const DEPARTMENT_PERMISSIONS: PermissionDef[] = define('DEPARTMENT', [
-  [P.ACCESS_KITCHEN, 1, 'Access kitchen'],
+  [P.VIEW_KITCHEN, 1, 'View kitchen'],
   [P.MANAGE_KITCHEN, 2, 'Manage kitchen'],
-  [P.ACCESS_RECEPTION, 1, 'Access reception'],
+  [P.VIEW_RECEPTION, 1, 'View reception'],
   [P.MANAGE_RECEPTION, 2, 'Manage reception'],
-  [P.ACCESS_HOTEL, 1, 'Access hotel'],
+  [P.VIEW_HOTEL, 1, 'View hotel'],
   [P.MANAGE_HOTEL, 2, 'Manage hotel'],
-  [P.ACCESS_RESTAURANT, 1, 'Access restaurant'],
+  [P.VIEW_RESTAURANT, 1, 'View restaurant'],
   [P.MANAGE_RESTAURANT, 2, 'Manage restaurant'],
 ]);
 
@@ -292,7 +306,7 @@ const GENERAL_PERMISSIONS: PermissionDef[] = define('STAFF', [
   [P.MANAGE_PROFILE, 2, 'Manage profile'],
 
   // Branch access
-  [P.ACCESS_BRANCH, 1, 'Access branch'],
+  [P.VIEW_BRANCH, 1, 'View branch'],
   [P.MANAGE_BRANCH, 2, 'Manage branch'],
   [P.VIEW_ALL_BRANCHES, 1, 'View all branches'],
   [P.VIEW_BRANCH_STAFF, 1, 'View branch staff'],
@@ -305,7 +319,7 @@ const GENERAL_PERMISSIONS: PermissionDef[] = define('STAFF', [
   [P.VIEW_BRANCH_FACILITY, 1, 'View branch facility'],
 
   // Facility
-  [P.ACCESS_FACILITY, 1, 'Access facility'],
+  [P.VIEW_FACILITY, 1, 'View facility'],
   [P.MANAGE_FACILITY, 2, 'Manage facility'],
 
   // Operations, tasks, stock
@@ -356,14 +370,26 @@ const GENERAL_PERMISSIONS: PermissionDef[] = define('STAFF', [
   // HR
   [P.VIEW_STAFF_PROFILES, 1, 'View staff profiles'],
   [P.MANAGE_STAFF_PROFILES, 2, 'Manage staff profiles'],
-  [P.VIEW_HR_RECORDS, 1, 'View HR records'],
-  [P.MANAGE_HR_RECORDS, 2, 'Manage HR records'],
+  [P.VIEW_HR_DOCUMENTS, 1, 'View HR documents'],
+  [P.MANAGE_HR_DOCUMENTS, 2, 'Manage HR documents'],
+  [P.VIEW_HR_PERFORMANCE, 1, 'View HR performance'],
+  [P.MANAGE_HR_PERFORMANCE, 2, 'Manage HR performance'],
 
-  // Financials
-  [P.VIEW_FINANCES, 1, 'View finances'],
-  [P.MANAGE_FINANCES, 2, 'Manage finances'],
+  // Financials — page-level
+  [P.VIEW_FINANCIAL_ANALYTICS, 1, 'View financial analytics'],
+  [P.MANAGE_FINANCIAL_ANALYTICS, 2, 'Manage financial analytics'],
+  [P.VIEW_COMPANY_FUNDS, 1, 'View company funds'],
+  [P.MANAGE_COMPANY_FUNDS, 2, 'Manage company funds'],
+  [P.VIEW_FINANCIAL_PERIODS, 1, 'View financial periods'],
+  [P.MANAGE_FINANCIAL_PERIODS, 2, 'Manage financial periods'],
+  [P.VIEW_TRANSACTIONS, 1, 'View transactions'],
+  [P.MANAGE_TRANSACTIONS, 2, 'Manage transactions'],
+  [P.VIEW_REMITTANCES, 1, 'View remittances'],
+  [P.MANAGE_REMITTANCES, 2, 'Manage remittances'],
+  [P.VIEW_VARIANCE_REPORTS, 1, 'View variance reports'],
   [P.VIEW_INVOICES, 1, 'View invoices'],
   [P.MANAGE_INVOICES, 2, 'Manage invoices'],
+  [P.VIEW_BILLING_POLICY, 1, 'View billing policy'],
   [P.MANAGE_BILLING_POLICY, 2, 'Manage billing policy'],
   [P.VIEW_PROCUREMENT, 1, 'View procurement'],
   [P.MANAGE_PROCUREMENT, 2, 'Manage procurement'],
@@ -510,6 +536,14 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     ],
   },
   {
+    group_name: 'Leave',
+    description: 'Leave requests and approvals',
+    level: 1,
+    category: 'BUSINESS_USER',
+    group_type: 'STAFF_MANAGEMENT',
+    permissions: [P.VIEW_LEAVE, P.MANAGE_LEAVE, P.APPROVE_LEAVE],
+  },
+  {
     group_name: 'Calendar',
     description: 'Company calendar and events',
     level: 1,
@@ -518,12 +552,52 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     permissions: [P.VIEW_CALENDAR_EVENTS, P.MANAGE_CALENDAR_EVENTS],
   },
   {
-    group_name: 'Finances',
-    description: 'Financial summaries and settings',
+    group_name: 'Financial analytics',
+    description: 'Financial overview and analytics page',
     level: 2,
     category: 'BUSINESS_USER',
     group_type: 'FINANCIALS',
-    permissions: [P.VIEW_FINANCES, P.MANAGE_FINANCES],
+    permissions: [P.VIEW_FINANCIAL_ANALYTICS, P.MANAGE_FINANCIAL_ANALYTICS],
+  },
+  {
+    group_name: 'Company funds',
+    description: 'Company wallet / fund management page',
+    level: 2,
+    category: 'BUSINESS_USER',
+    group_type: 'FINANCIALS',
+    permissions: [P.VIEW_COMPANY_FUNDS, P.MANAGE_COMPANY_FUNDS],
+  },
+  {
+    group_name: 'Financial periods',
+    description: 'Accounting periods page',
+    level: 2,
+    category: 'BUSINESS_USER',
+    group_type: 'FINANCIALS',
+    permissions: [P.VIEW_FINANCIAL_PERIODS, P.MANAGE_FINANCIAL_PERIODS],
+  },
+  {
+    group_name: 'Transactions',
+    description: 'Ledger transactions page',
+    level: 2,
+    category: 'BUSINESS_USER',
+    group_type: 'FINANCIALS',
+    permissions: [P.VIEW_TRANSACTIONS, P.MANAGE_TRANSACTIONS],
+  },
+  {
+    group_name: 'Remittances',
+    description: 'Remittances page',
+    level: 2,
+    category: 'BUSINESS_USER',
+    group_type: 'FINANCIALS',
+    permissions: [P.VIEW_REMITTANCES, P.MANAGE_REMITTANCES],
+  },
+  {
+    group_name: 'Variance reports',
+    description: 'Budget variance report page',
+    level: 2,
+    category: 'BUSINESS_USER',
+    group_type: 'FINANCIALS',
+    permissions: [P.VIEW_VARIANCE_REPORTS],
   },
   {
     group_name: 'Invoices',
@@ -534,6 +608,7 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     permissions: [
       P.VIEW_INVOICES,
       P.MANAGE_INVOICES,
+      P.VIEW_BILLING_POLICY,
       P.MANAGE_BILLING_POLICY,
     ],
   },
@@ -547,6 +622,7 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
       P.VIEW_PAYROLLS,
       P.MANAGE_PAYROLLS,
       P.APPROVE_PAYROLLS,
+      P.SEND_PAYROLL,
       P.VIEW_PAYROLL_REPORTS,
       P.MANAGE_PAYROLL_SCHEDULES,
     ],
@@ -611,11 +687,11 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
   // ── DEPARTMENT ────────────────────────────────────────────────────────────
   {
     group_name: 'Kitchen',
-    description: 'Kitchen page access',
+    description: 'Kitchen page',
     level: 1,
     category: 'DEPARTMENT',
     group_type: 'PAGE_ACCESS',
-    permissions: [P.ACCESS_KITCHEN, P.MANAGE_KITCHEN],
+    permissions: [P.VIEW_KITCHEN, P.MANAGE_KITCHEN],
   },
   {
     group_name: 'Reception',
@@ -624,7 +700,7 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     category: 'DEPARTMENT',
     group_type: 'PAGE_ACCESS',
     permissions: [
-      P.ACCESS_RECEPTION,
+      P.VIEW_RECEPTION,
       P.MANAGE_RECEPTION,
       P.VIEW_RESERVATIONS,
       P.MANAGE_RESERVATIONS,
@@ -633,19 +709,19 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
   },
   {
     group_name: 'Hotel',
-    description: 'Hotel page access',
+    description: 'Hotel page',
     level: 1,
     category: 'DEPARTMENT',
     group_type: 'PAGE_ACCESS',
-    permissions: [P.ACCESS_HOTEL, P.MANAGE_HOTEL],
+    permissions: [P.VIEW_HOTEL, P.MANAGE_HOTEL],
   },
   {
     group_name: 'Restaurant',
-    description: 'Restaurant page access',
+    description: 'Restaurant page',
     level: 1,
     category: 'DEPARTMENT',
     group_type: 'PAGE_ACCESS',
-    permissions: [P.ACCESS_RESTAURANT, P.MANAGE_RESTAURANT],
+    permissions: [P.VIEW_RESTAURANT, P.MANAGE_RESTAURANT],
   },
 
   // ── STAFF ─────────────────────────────────────────────────────────────────
@@ -669,7 +745,7 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     category: 'STAFF',
     group_type: 'PAGE_ACCESS',
     permissions: [
-      P.ACCESS_BRANCH,
+      P.VIEW_BRANCH,
       P.MANAGE_BRANCH,
       P.VIEW_ALL_BRANCHES,
       P.VIEW_BRANCH_STAFF,
@@ -688,15 +764,31 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     level: 1,
     category: 'STAFF',
     group_type: 'PAGE_ACCESS',
-    permissions: [P.ACCESS_FACILITY, P.MANAGE_FACILITY],
+    permissions: [P.VIEW_FACILITY, P.MANAGE_FACILITY],
   },
   {
     group_name: 'Reception',
-    description: 'Reception desk access',
+    description: 'Reception desk',
     level: 1,
     category: 'STAFF',
     group_type: 'PAGE_ACCESS',
-    permissions: [P.ACCESS_RECEPTION, P.MANAGE_RECEPTION],
+    permissions: [P.VIEW_RECEPTION, P.MANAGE_RECEPTION],
+  },
+  {
+    group_name: 'Roles',
+    description: 'View and manage company roles',
+    level: 2,
+    category: 'STAFF',
+    group_type: 'STAFF_MANAGEMENT',
+    permissions: [P.VIEW_ROLES, P.MANAGE_ROLES],
+  },
+  {
+    group_name: 'Staff',
+    description: 'View and manage staff records',
+    level: 2,
+    category: 'STAFF',
+    group_type: 'STAFF_MANAGEMENT',
+    permissions: [P.VIEW_STAFF, P.MANAGE_STAFF, P.MANAGE_INVITATIONS],
   },
   {
     group_name: 'Reservations',
@@ -832,12 +924,64 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     permissions: [P.VIEW_STAFF_PROFILES, P.MANAGE_STAFF_PROFILES],
   },
   {
-    group_name: 'HR Records',
-    description: 'Contracts, documents and performance',
+    group_name: 'HR Documents',
+    description: 'Contracts and HR document files',
     level: 1,
     category: 'STAFF',
     group_type: 'STAFF_MANAGEMENT',
-    permissions: [P.VIEW_HR_RECORDS, P.MANAGE_HR_RECORDS],
+    permissions: [P.VIEW_HR_DOCUMENTS, P.MANAGE_HR_DOCUMENTS],
+  },
+  {
+    group_name: 'HR Performance',
+    description: 'Performance reviews and related records',
+    level: 1,
+    category: 'STAFF',
+    group_type: 'STAFF_MANAGEMENT',
+    permissions: [P.VIEW_HR_PERFORMANCE, P.MANAGE_HR_PERFORMANCE],
+  },
+  {
+    group_name: 'Financial analytics',
+    description: 'Financial overview page',
+    level: 2,
+    category: 'STAFF',
+    group_type: 'FINANCIALS',
+    permissions: [P.VIEW_FINANCIAL_ANALYTICS, P.MANAGE_FINANCIAL_ANALYTICS],
+  },
+  {
+    group_name: 'Company funds',
+    description: 'Fund management / wallet page',
+    level: 2,
+    category: 'STAFF',
+    group_type: 'FINANCIALS',
+    permissions: [P.VIEW_COMPANY_FUNDS, P.MANAGE_COMPANY_FUNDS],
+  },
+  {
+    group_name: 'Budgets',
+    description: 'Monthly budgets and periods',
+    level: 2,
+    category: 'STAFF',
+    group_type: 'FINANCIALS',
+    permissions: [
+      P.VIEW_MONTHLY_BUDGETS,
+      P.MANAGE_MONTHLY_BUDGETS,
+      P.APPROVE_MONTHLY_BUDGETS,
+      P.VIEW_FINANCIAL_PERIODS,
+      P.MANAGE_FINANCIAL_PERIODS,
+      P.VIEW_VARIANCE_REPORTS,
+    ],
+  },
+  {
+    group_name: 'Transactions & remittances',
+    description: 'Ledger transactions and remittances',
+    level: 2,
+    category: 'STAFF',
+    group_type: 'FINANCIALS',
+    permissions: [
+      P.VIEW_TRANSACTIONS,
+      P.MANAGE_TRANSACTIONS,
+      P.VIEW_REMITTANCES,
+      P.MANAGE_REMITTANCES,
+    ],
   },
   {
     group_name: 'Payroll',
@@ -848,6 +992,7 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     permissions: [
       P.VIEW_PAYROLLS,
       P.MANAGE_PAYROLLS,
+      P.APPROVE_PAYROLLS,
       P.SEND_PAYROLL,
       P.VIEW_PAYROLL_REPORTS,
       P.MANAGE_PAYROLL_SCHEDULES,
@@ -855,11 +1000,16 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
   },
   {
     group_name: 'Invoices',
-    description: 'Invoices and remittances',
+    description: 'Invoices and billing policy',
     level: 2,
     category: 'STAFF',
     group_type: 'FINANCIALS',
-    permissions: [P.VIEW_INVOICES, P.MANAGE_INVOICES],
+    permissions: [
+      P.VIEW_INVOICES,
+      P.MANAGE_INVOICES,
+      P.VIEW_BILLING_POLICY,
+      P.MANAGE_BILLING_POLICY,
+    ],
   },
   {
     group_name: 'Procurement',
@@ -867,7 +1017,11 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
     level: 2,
     category: 'STAFF',
     group_type: 'FINANCIALS',
-    permissions: [P.VIEW_PROCUREMENT, P.MANAGE_PROCUREMENT],
+    permissions: [
+      P.VIEW_PROCUREMENT,
+      P.MANAGE_PROCUREMENT,
+      P.APPROVE_PROCUREMENT,
+    ],
   },
   {
     group_name: 'Fund Requests',
@@ -921,6 +1075,22 @@ export const LEGACY_PERMISSION_RENAMES: Record<string, PermissionName> = {
   view_payroll: P.VIEW_PAYROLLS,
   manage_payroll: P.MANAGE_PAYROLLS,
 
+  // access_* → view_*
+  access_kitchen: P.VIEW_KITCHEN,
+  access_reception: P.VIEW_RECEPTION,
+  access_hotel: P.VIEW_HOTEL,
+  access_restaurant: P.VIEW_RESTAURANT,
+  access_branch: P.VIEW_BRANCH,
+  access_facility: P.VIEW_FACILITY,
+
+  // Broad finances → page-level analytics
+  view_finances: P.VIEW_FINANCIAL_ANALYTICS,
+  manage_finances: P.MANAGE_FINANCIAL_ANALYTICS,
+
+  // Broad HR records → documents (performance is separate going forward)
+  view_hr_records: P.VIEW_HR_DOCUMENTS,
+  manage_hr_records: P.MANAGE_HR_DOCUMENTS,
+
   staff_view_all_branches: P.VIEW_ALL_BRANCHES,
   staff_view_branch_staff: P.VIEW_BRANCH_STAFF,
   staff_view_branch_leave: P.VIEW_BRANCH_LEAVE,
@@ -930,14 +1100,14 @@ export const LEGACY_PERMISSION_RENAMES: Record<string, PermissionName> = {
   staff_view_branch_tasks: P.VIEW_BRANCH_TASKS,
   staff_view_branch_reception: P.VIEW_BRANCH_RECEPTION,
   staff_view_branch_facility: P.VIEW_BRANCH_FACILITY,
-  staff_access_facility: P.ACCESS_FACILITY,
+  staff_access_facility: P.VIEW_FACILITY,
   staff_manage_facility: P.MANAGE_FACILITY,
-  staff_access_reception: P.ACCESS_RECEPTION,
+  staff_access_reception: P.VIEW_RECEPTION,
   staff_manage_reception: P.MANAGE_RECEPTION,
   staff_view_dashboard: P.VIEW_DASHBOARD,
   staff_view_operations: P.VIEW_OPERATIONS,
   staff_manage_operations: P.MANAGE_OPERATIONS,
-  staff_access_branch: P.ACCESS_BRANCH,
+  staff_access_branch: P.VIEW_BRANCH,
   staff_manage_branch: P.MANAGE_BRANCH,
   staff_view_payroll: P.VIEW_PAYROLLS,
   staff_manage_payroll: P.MANAGE_PAYROLLS,
@@ -959,6 +1129,34 @@ export function isPermissionName(value: string): value is PermissionName {
 /** Resolves a legacy slug to its canonical form; returns unknown slugs unchanged. */
 export function canonicalPermissionName(value: string): string {
   return LEGACY_PERMISSION_RENAMES[value] ?? value;
+}
+
+/**
+ * Approval-chain entity slugs (events ApprovalChainService) → the grant that
+ * marks a company/staff role as eligible to sit on that chain's steps.
+ */
+export const APPROVAL_ENTITY_PERMISSIONS: Readonly<
+  Record<string, PermissionName>
+> = {
+  payroll: P.APPROVE_PAYROLLS,
+  budget: P.APPROVE_MONTHLY_BUDGETS,
+  leave: P.APPROVE_LEAVE,
+  vendor: P.APPROVE_PROCUREMENT,
+  purchase_request: P.APPROVE_PROCUREMENT,
+  purchase_order: P.APPROVE_PROCUREMENT,
+  goods_receipt: P.APPROVE_PROCUREMENT,
+  reservation: P.APPROVE_RESERVATIONS,
+  booking: P.APPROVE_RESERVATIONS,
+  wallet_withdrawal: P.APPROVE_DISBURSEMENTS,
+  withdrawal: P.APPROVE_DISBURSEMENTS,
+};
+
+/** Looks up the approve_* permission for an approval-entity slug. */
+export function approvalPermissionForEntity(
+  entityTypeSlug: string | undefined | null,
+): PermissionName | undefined {
+  if (!entityTypeSlug) return undefined;
+  return APPROVAL_ENTITY_PERMISSIONS[entityTypeSlug.toLowerCase()];
 }
 
 /**

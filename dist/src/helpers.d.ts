@@ -163,6 +163,12 @@ export declare class AppHelper {
         percentage: number;
         trend: "increase" | "decrease" | "neutral";
     };
+    static normalizeTimelineKey(timeline: string | number | undefined | null): string;
+    static buildFilledTimelineBuckets(dateFrom: Date, dateTo: Date, timeline?: string | number | null): Array<{
+        start: Date;
+        end: Date;
+        label: string;
+    }>;
     static getDateRanges({ timeline, start_date, end_date, }: {
         timeline: string;
         start_date?: string;

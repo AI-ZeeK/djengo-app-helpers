@@ -60,20 +60,20 @@ public static class Permissions
     public const string ManageAudit = "manage_audit";
 
     // DEPARTMENT
-    /// <summary>Access kitchen</summary>
-    public const string AccessKitchen = "access_kitchen";
+    /// <summary>View kitchen</summary>
+    public const string ViewKitchen = "view_kitchen";
     /// <summary>Manage kitchen</summary>
     public const string ManageKitchen = "manage_kitchen";
-    /// <summary>Access reception</summary>
-    public const string AccessReception = "access_reception";
+    /// <summary>View reception</summary>
+    public const string ViewReception = "view_reception";
     /// <summary>Manage reception</summary>
     public const string ManageReception = "manage_reception";
-    /// <summary>Access hotel</summary>
-    public const string AccessHotel = "access_hotel";
+    /// <summary>View hotel</summary>
+    public const string ViewHotel = "view_hotel";
     /// <summary>Manage hotel</summary>
     public const string ManageHotel = "manage_hotel";
-    /// <summary>Access restaurant</summary>
-    public const string AccessRestaurant = "access_restaurant";
+    /// <summary>View restaurant</summary>
+    public const string ViewRestaurant = "view_restaurant";
     /// <summary>Manage restaurant</summary>
     public const string ManageRestaurant = "manage_restaurant";
 
@@ -84,8 +84,8 @@ public static class Permissions
     public const string ViewProfile = "view_profile";
     /// <summary>Manage profile</summary>
     public const string ManageProfile = "manage_profile";
-    /// <summary>Access branch</summary>
-    public const string AccessBranch = "access_branch";
+    /// <summary>View branch</summary>
+    public const string ViewBranch = "view_branch";
     /// <summary>Manage branch</summary>
     public const string ManageBranch = "manage_branch";
     /// <summary>View all branches</summary>
@@ -106,8 +106,8 @@ public static class Permissions
     public const string ViewBranchReception = "view_branch_reception";
     /// <summary>View branch facility</summary>
     public const string ViewBranchFacility = "view_branch_facility";
-    /// <summary>Access facility</summary>
-    public const string AccessFacility = "access_facility";
+    /// <summary>View facility</summary>
+    public const string ViewFacility = "view_facility";
     /// <summary>Manage facility</summary>
     public const string ManageFacility = "manage_facility";
     /// <summary>View operations</summary>
@@ -184,18 +184,42 @@ public static class Permissions
     public const string ViewStaffProfiles = "view_staff_profiles";
     /// <summary>Manage staff profiles</summary>
     public const string ManageStaffProfiles = "manage_staff_profiles";
-    /// <summary>View HR records</summary>
-    public const string ViewHrRecords = "view_hr_records";
-    /// <summary>Manage HR records</summary>
-    public const string ManageHrRecords = "manage_hr_records";
-    /// <summary>View finances</summary>
-    public const string ViewFinances = "view_finances";
-    /// <summary>Manage finances</summary>
-    public const string ManageFinances = "manage_finances";
+    /// <summary>View HR documents</summary>
+    public const string ViewHrDocuments = "view_hr_documents";
+    /// <summary>Manage HR documents</summary>
+    public const string ManageHrDocuments = "manage_hr_documents";
+    /// <summary>View HR performance</summary>
+    public const string ViewHrPerformance = "view_hr_performance";
+    /// <summary>Manage HR performance</summary>
+    public const string ManageHrPerformance = "manage_hr_performance";
+    /// <summary>View financial analytics</summary>
+    public const string ViewFinancialAnalytics = "view_financial_analytics";
+    /// <summary>Manage financial analytics</summary>
+    public const string ManageFinancialAnalytics = "manage_financial_analytics";
+    /// <summary>View company funds</summary>
+    public const string ViewCompanyFunds = "view_company_funds";
+    /// <summary>Manage company funds</summary>
+    public const string ManageCompanyFunds = "manage_company_funds";
+    /// <summary>View financial periods</summary>
+    public const string ViewFinancialPeriods = "view_financial_periods";
+    /// <summary>Manage financial periods</summary>
+    public const string ManageFinancialPeriods = "manage_financial_periods";
+    /// <summary>View transactions</summary>
+    public const string ViewTransactions = "view_transactions";
+    /// <summary>Manage transactions</summary>
+    public const string ManageTransactions = "manage_transactions";
+    /// <summary>View remittances</summary>
+    public const string ViewRemittances = "view_remittances";
+    /// <summary>Manage remittances</summary>
+    public const string ManageRemittances = "manage_remittances";
+    /// <summary>View variance reports</summary>
+    public const string ViewVarianceReports = "view_variance_reports";
     /// <summary>View invoices</summary>
     public const string ViewInvoices = "view_invoices";
     /// <summary>Manage invoices</summary>
     public const string ManageInvoices = "manage_invoices";
+    /// <summary>View billing policy</summary>
+    public const string ViewBillingPolicy = "view_billing_policy";
     /// <summary>Manage billing policy</summary>
     public const string ManageBillingPolicy = "manage_billing_policy";
     /// <summary>View procurement</summary>
@@ -275,18 +299,18 @@ public static class Permissions
         ManageInvitations,
         ViewAudit,
         ManageAudit,
-        AccessKitchen,
+        ViewKitchen,
         ManageKitchen,
-        AccessReception,
+        ViewReception,
         ManageReception,
-        AccessHotel,
+        ViewHotel,
         ManageHotel,
-        AccessRestaurant,
+        ViewRestaurant,
         ManageRestaurant,
         ViewDashboard,
         ViewProfile,
         ManageProfile,
-        AccessBranch,
+        ViewBranch,
         ManageBranch,
         ViewAllBranches,
         ViewBranchStaff,
@@ -297,7 +321,7 @@ public static class Permissions
         ViewBranchTasks,
         ViewBranchReception,
         ViewBranchFacility,
-        AccessFacility,
+        ViewFacility,
         ManageFacility,
         ViewOperations,
         ManageOperations,
@@ -336,12 +360,24 @@ public static class Permissions
         ManageComplaints,
         ViewStaffProfiles,
         ManageStaffProfiles,
-        ViewHrRecords,
-        ManageHrRecords,
-        ViewFinances,
-        ManageFinances,
+        ViewHrDocuments,
+        ManageHrDocuments,
+        ViewHrPerformance,
+        ManageHrPerformance,
+        ViewFinancialAnalytics,
+        ManageFinancialAnalytics,
+        ViewCompanyFunds,
+        ManageCompanyFunds,
+        ViewFinancialPeriods,
+        ManageFinancialPeriods,
+        ViewTransactions,
+        ManageTransactions,
+        ViewRemittances,
+        ManageRemittances,
+        ViewVarianceReports,
         ViewInvoices,
         ManageInvoices,
+        ViewBillingPolicy,
         ManageBillingPolicy,
         ViewProcurement,
         ManageProcurement,

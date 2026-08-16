@@ -54,18 +54,18 @@ export declare enum PermissionName {
     MANAGE_INVITATIONS = "manage_invitations",
     VIEW_AUDIT = "view_audit",
     MANAGE_AUDIT = "manage_audit",
-    ACCESS_KITCHEN = "access_kitchen",
+    VIEW_KITCHEN = "view_kitchen",
     MANAGE_KITCHEN = "manage_kitchen",
-    ACCESS_RECEPTION = "access_reception",
+    VIEW_RECEPTION = "view_reception",
     MANAGE_RECEPTION = "manage_reception",
-    ACCESS_HOTEL = "access_hotel",
+    VIEW_HOTEL = "view_hotel",
     MANAGE_HOTEL = "manage_hotel",
-    ACCESS_RESTAURANT = "access_restaurant",
+    VIEW_RESTAURANT = "view_restaurant",
     MANAGE_RESTAURANT = "manage_restaurant",
     VIEW_DASHBOARD = "view_dashboard",
     VIEW_PROFILE = "view_profile",
     MANAGE_PROFILE = "manage_profile",
-    ACCESS_BRANCH = "access_branch",
+    VIEW_BRANCH = "view_branch",
     MANAGE_BRANCH = "manage_branch",
     VIEW_ALL_BRANCHES = "view_all_branches",
     VIEW_BRANCH_STAFF = "view_branch_staff",
@@ -76,7 +76,7 @@ export declare enum PermissionName {
     VIEW_BRANCH_TASKS = "view_branch_tasks",
     VIEW_BRANCH_RECEPTION = "view_branch_reception",
     VIEW_BRANCH_FACILITY = "view_branch_facility",
-    ACCESS_FACILITY = "access_facility",
+    VIEW_FACILITY = "view_facility",
     MANAGE_FACILITY = "manage_facility",
     VIEW_OPERATIONS = "view_operations",
     MANAGE_OPERATIONS = "manage_operations",
@@ -115,12 +115,24 @@ export declare enum PermissionName {
     MANAGE_COMPLAINTS = "manage_complaints",
     VIEW_STAFF_PROFILES = "view_staff_profiles",
     MANAGE_STAFF_PROFILES = "manage_staff_profiles",
-    VIEW_HR_RECORDS = "view_hr_records",
-    MANAGE_HR_RECORDS = "manage_hr_records",
-    VIEW_FINANCES = "view_finances",
-    MANAGE_FINANCES = "manage_finances",
+    VIEW_HR_DOCUMENTS = "view_hr_documents",
+    MANAGE_HR_DOCUMENTS = "manage_hr_documents",
+    VIEW_HR_PERFORMANCE = "view_hr_performance",
+    MANAGE_HR_PERFORMANCE = "manage_hr_performance",
+    VIEW_FINANCIAL_ANALYTICS = "view_financial_analytics",
+    MANAGE_FINANCIAL_ANALYTICS = "manage_financial_analytics",
+    VIEW_COMPANY_FUNDS = "view_company_funds",
+    MANAGE_COMPANY_FUNDS = "manage_company_funds",
+    VIEW_FINANCIAL_PERIODS = "view_financial_periods",
+    MANAGE_FINANCIAL_PERIODS = "manage_financial_periods",
+    VIEW_TRANSACTIONS = "view_transactions",
+    MANAGE_TRANSACTIONS = "manage_transactions",
+    VIEW_REMITTANCES = "view_remittances",
+    MANAGE_REMITTANCES = "manage_remittances",
+    VIEW_VARIANCE_REPORTS = "view_variance_reports",
     VIEW_INVOICES = "view_invoices",
     MANAGE_INVOICES = "manage_invoices",
+    VIEW_BILLING_POLICY = "view_billing_policy",
     MANAGE_BILLING_POLICY = "manage_billing_policy",
     VIEW_PROCUREMENT = "view_procurement",
     MANAGE_PROCUREMENT = "manage_procurement",
@@ -193,6 +205,13 @@ export declare const ALL_PERMISSION_NAMES: PermissionName[];
 export declare function isPermissionName(value: string): value is PermissionName;
 /** Resolves a legacy slug to its canonical form; returns unknown slugs unchanged. */
 export declare function canonicalPermissionName(value: string): string;
+/**
+ * Approval-chain entity slugs (events ApprovalChainService) → the grant that
+ * marks a company/staff role as eligible to sit on that chain's steps.
+ */
+export declare const APPROVAL_ENTITY_PERMISSIONS: Readonly<Record<string, PermissionName>>;
+/** Looks up the approve_* permission for an approval-entity slug. */
+export declare function approvalPermissionForEntity(entityTypeSlug: string | undefined | null): PermissionName | undefined;
 /**
  * Slugs of the two roles organization-service creates with every new
  * organization, each holding the whole catalog above.
