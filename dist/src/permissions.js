@@ -1027,6 +1027,18 @@ exports.LEGACY_PERMISSION_RENAMES = {
     staff_view_payroll: P.VIEW_PAYROLLS,
     staff_manage_payroll: P.MANAGE_PAYROLLS,
     staff_manage_schedule: P.MANAGE_SCHEDULE,
+    staff_view_communication: P.VIEW_COMMUNICATION,
+    staff_manage_communication: P.MANAGE_COMMUNICATION,
+    staff_view_profile: P.VIEW_PROFILE,
+    staff_manage_profile: P.MANAGE_PROFILE,
+    // Legacy role-prefixed catalog (pre-unification SCREAMING / snake forms)
+    business_user_manage_organization: P.MANAGE_ORGANIZATION,
+    business_user_restrict_branch_access: P.RESTRICT_BRANCH_ACCESS,
+    business_user_view_dashboard: P.VIEW_DASHBOARD,
+    business_user_view_finances: P.VIEW_FINANCIAL_ANALYTICS,
+    business_user_manage_finances: P.MANAGE_FINANCIAL_ANALYTICS,
+    business_user_view_payrolls: P.VIEW_PAYROLLS,
+    business_user_manage_payrolls: P.MANAGE_PAYROLLS,
 };
 /** Every slug, in catalog order. */
 exports.ALL_PERMISSION_NAMES = exports.ALL_PERMISSIONS.map((p) => p.name);
@@ -1037,7 +1049,11 @@ function isPermissionName(value) {
 }
 /** Resolves a legacy slug to its canonical form; returns unknown slugs unchanged. */
 function canonicalPermissionName(value) {
-    return exports.LEGACY_PERMISSION_RENAMES[value] ?? value;
+    const trimmed = value.trim();
+    if (!trimmed)
+        return trimmed;
+    const lower = trimmed.toLowerCase();
+    return exports.LEGACY_PERMISSION_RENAMES[lower] ?? lower;
 }
 /**
  * Approval-chain entity slugs (events ApprovalChainService) → the grant that
