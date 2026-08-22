@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.PARTNER_TYPE = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = exports.CALENDAR_EVENT_TYPE_ENUM = exports.CALENDAR_RECURRENCE_PRESET_ENUM = void 0;
+exports.SettigsPageCompletionKey = exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.PARTNER_TYPE = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = exports.CALENDAR_EVENT_TYPE_ENUM = exports.CALENDAR_RECURRENCE_PRESET_ENUM = void 0;
 /** Matches gRPC `CalendarRecurrencePreset` in events.proto (create/update calendar event). */
 var CALENDAR_RECURRENCE_PRESET_ENUM;
 (function (CALENDAR_RECURRENCE_PRESET_ENUM) {
@@ -331,4 +331,14 @@ var PermissionRestriction;
     PermissionRestriction["RESTRICT_FUND_MANAGEMENT"] = "RESTRICT_FUND_MANAGEMENT";
     PermissionRestriction["RESTRICT_FUND_APPROVAL"] = "RESTRICT_FUND_APPROVAL";
 })(PermissionRestriction || (exports.PermissionRestriction = PermissionRestriction = {}));
+var SettigsPageCompletionKey;
+(function (SettigsPageCompletionKey) {
+    SettigsPageCompletionKey["PROFILE"] = "profile";
+    SettigsPageCompletionKey["LOCATION"] = "location";
+    SettigsPageCompletionKey["OPERATIONAL_POLICY"] = "operational_policy";
+    SettigsPageCompletionKey["FOOD_REFUND_POLICY"] = "food_refund_policy";
+    SettigsPageCompletionKey["BILLING_POLICY"] = "billing_policy";
+    SettigsPageCompletionKey["BOOKING_DOCUMENTS_POLICY"] = "booking_documents_policy";
+    SettigsPageCompletionKey["BUSINESS_HOUR_POLICY"] = "business_hour_policy";
+})(SettigsPageCompletionKey || (exports.SettigsPageCompletionKey = SettigsPageCompletionKey = {}));
 //# sourceMappingURL=enums.js.map

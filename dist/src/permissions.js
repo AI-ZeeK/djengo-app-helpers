@@ -656,6 +656,7 @@ exports.PERMISSION_GROUPS = [
             P.VIEW_PROFILE,
             P.MANAGE_PROFILE,
             P.VIEW_SETTINGS,
+            P.MANAGE_SETTINGS,
         ],
     },
     {

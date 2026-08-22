@@ -314,4 +314,12 @@ export enum PermissionRestriction {
   RESTRICT_FUND_APPROVAL = "RESTRICT_FUND_APPROVAL",
 }
 
-
+export enum SettigsPageCompletionKey {
+  PROFILE = "profile",
+  LOCATION = "location",
+  OPERATIONAL_POLICY = "operational_policy",
+  FOOD_REFUND_POLICY = "food_refund_policy",
+  BILLING_POLICY = "billing_policy",
+  BOOKING_DOCUMENTS_POLICY = "booking_documents_policy",
+  BUSINESS_HOUR_POLICY = "business_hour_policy",
+}
