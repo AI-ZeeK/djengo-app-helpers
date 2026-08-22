@@ -314,7 +314,7 @@ export enum PermissionRestriction {
   RESTRICT_FUND_APPROVAL = "RESTRICT_FUND_APPROVAL",
 }
 
-export enum SettigsPageCompletionKey {
+export enum SETTINGS_PAGE_COMPLETION_KEY {
   PROFILE = "profile",
   LOCATION = "location",
   OPERATIONAL_POLICY = "operational_policy",

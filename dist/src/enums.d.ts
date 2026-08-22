@@ -287,7 +287,7 @@ export declare enum PermissionRestriction {
     RESTRICT_FUND_MANAGEMENT = "RESTRICT_FUND_MANAGEMENT",
     RESTRICT_FUND_APPROVAL = "RESTRICT_FUND_APPROVAL"
 }
-export declare enum SettigsPageCompletionKey {
+export declare enum SETTINGS_PAGE_COMPLETION_KEY {
     PROFILE = "profile",
     LOCATION = "location",
     OPERATIONAL_POLICY = "operational_policy",
