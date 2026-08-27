@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppHelper = void 0;
 var Timeline;
 (function (Timeline) {
+    Timeline["today"] = "today";
+    Timeline["_7d"] = "7d";
     Timeline["_1m"] = "1m";
     Timeline["_3m"] = "3m";
     Timeline["_6m"] = "6m";
@@ -502,13 +504,15 @@ class AppHelper {
             2: Timeline._6m,
             3: Timeline._1y,
             4: Timeline.all,
+            5: Timeline.today,
+            6: Timeline._7d,
         };
         if (typeof timeline === "number" && byNumber[timeline]) {
             return byNumber[timeline];
         }
         if (typeof timeline === "string") {
-            const trimmed = timeline.trim().replace(/^_/, "");
-            if (["1m", "3m", "6m", "1y", "1yr", "all"].includes(trimmed)) {
+            const trimmed = timeline.trim().replace(/^_/, "").toLowerCase();
+            if (["today", "7d", "1m", "3m", "6m", "1y", "1yr", "all"].includes(trimmed)) {
                 return trimmed === "1yr" ? Timeline._1y : trimmed;
             }
             const asNum = Number(trimmed);
@@ -521,6 +525,37 @@ class AppHelper {
         const key = AppHelper.normalizeTimelineKey(timeline);
         const buckets = [];
         const endExclusive = new Date(dateTo.getTime() + 1);
+        if (key === Timeline.today) {
+            const dayStart = new Date(dateTo.getFullYear(), dateTo.getMonth(), dateTo.getDate(), 0, 0, 0, 0);
+            const hourEnd = Math.max(1, dateTo.getHours() + 1);
+            for (let h = 0; h < hourEnd; h++) {
+                const start = new Date(dayStart);
+                start.setHours(h, 0, 0, 0);
+                const end = new Date(dayStart);
+                end.setHours(h + 1, 0, 0, 0);
+                buckets.push({
+                    start,
+                    end: h === hourEnd - 1 ? endExclusive : end,
+                    label: `${String(h).padStart(2, "0")}:00`,
+                });
+            }
+            return buckets;
+        }
+        if (key === Timeline._7d) {
+            for (let i = 0; i < 7; i++) {
+                const start = new Date(dateFrom);
+                start.setDate(dateFrom.getDate() + i);
+                start.setHours(0, 0, 0, 0);
+                const end = new Date(start);
+                end.setDate(start.getDate() + 1);
+                buckets.push({
+                    start,
+                    end: i === 6 ? endExclusive : end,
+                    label: start.toLocaleString("en", { day: "2-digit", month: "short" }),
+                });
+            }
+            return buckets;
+        }
         if (key === Timeline._1m) {
             for (let i = 0; i < 4; i++) {
                 const start = new Date(dateFrom);
@@ -575,6 +610,19 @@ class AppHelper {
         const timelineKey = AppHelper.normalizeTimelineKey(timeline);
         if (timelineKey) {
             switch (timelineKey) {
+                case Timeline.today: {
+                    date_from = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+                    const prevDay = new Date(date_from);
+                    prevDay.setDate(prevDay.getDate() - 1);
+                    prev_date_from = prevDay;
+                    prev_date_to = new Date(date_from.getTime() - 1);
+                    break;
+                }
+                case Timeline._7d:
+                    date_from = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6, 0, 0, 0, 0);
+                    prev_date_from = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 13, 0, 0, 0, 0);
+                    prev_date_to = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7, 23, 59, 59, 999);
+                    break;
                 case Timeline._1m:
                     date_from = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
                     prev_date_from = new Date(now.getFullYear(), now.getMonth() - 2, now.getDate());
