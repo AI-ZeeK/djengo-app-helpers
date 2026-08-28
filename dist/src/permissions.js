@@ -1072,6 +1072,10 @@ exports.APPROVAL_ENTITY_PERMISSIONS = {
     booking: P.APPROVE_RESERVATIONS,
     wallet_withdrawal: P.APPROVE_DISBURSEMENTS,
     withdrawal: P.APPROVE_DISBURSEMENTS,
+    salary_advance: P.APPROVE_PAYROLLS,
+    advance: P.APPROVE_PAYROLLS,
+    staff_termination: P.MANAGE_STAFF_PROFILES,
+    termination: P.MANAGE_STAFF_PROFILES,
 };
 /** Looks up the approve_* permission for an approval-entity slug. */
 function approvalPermissionForEntity(entityTypeSlug) {
