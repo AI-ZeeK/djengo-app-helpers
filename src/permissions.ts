@@ -1110,13 +1110,13 @@ export function approvalPermissionForEntity(
  * Chain configuration stays on view/manage_approval_chain; inbox is also
  * available to anyone who can sit on a chain step.
  */
-export const APPROVAL_INBOX_PERMISSIONS: PermissionName[] = [
-  ...new Set<PermissionName>([
+export const APPROVAL_INBOX_PERMISSIONS: PermissionName[] = Array.from(
+  new Set<PermissionName>([
     P.VIEW_APPROVAL_CHAIN,
     P.MANAGE_APPROVAL_CHAIN,
     ...Object.values(APPROVAL_ENTITY_PERMISSIONS),
   ]),
-];
+);
 
 /**
  * Slugs of the two roles organization-service creates with every new
