@@ -40,6 +40,15 @@ export declare enum COMPANY_SERVICE_TYPE_ENUM {
     HOSPITAL = "HOSPITAL",
     GYM = "GYM"
 }
+/** Department category keys used when creating company departments. */
+export declare enum DEPARTMENT_TYPE_ENUM {
+    KITCHEN = "KITCHEN",
+    RECEPTION = "RECEPTION",
+    HR = "HR",
+    LEGAL = "LEGAL",
+    OPERATIONS = "OPERATIONS",
+    CUSTOM = "CUSTOM"
+}
 export declare enum DAY_OF_WEEK_ENUM {
     MONDAY = "MONDAY",
     TUESDAY = "TUESDAY",
@@ -121,6 +130,7 @@ export declare enum PARTNER_TYPE {
 }
 export * from "./facility-enums";
 export * from "./facility-helpers";
+export * from "./facility-occupancy-policy";
 export * from "./financial-enums";
 export declare enum ADDRESS_TYPE_ENUM {
     USER_HOME = "user_home",

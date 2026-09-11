@@ -90,6 +90,7 @@ never reach the seed:
 
 - `src/enums.ts` — cross-service enums (`ROLES_ENUM`, `ADDRESS_TYPE_ENUM`, …)
 - `src/facility-enums.ts`, `src/facility-helpers.ts` — facility layout types
+- `src/facility-occupancy-policy.ts` — `FacilityOccupancyPolicyHelper` (mode defaults + metadata overlay)
 - `src/admin-permissions.ts` — platform admin permission catalog
 - `src/helpers.ts` — the `AppHelper` utility class
 

@@ -18,4 +18,11 @@ export declare function enumSelectOptions<E extends Record<string, string>>(enum
     value: E[keyof E];
     label: string;
 }[];
+/** Normalize API/proto node type (number, "6", BED) to the string enum. */
+export declare function normalizeFacilityNodeType(value: unknown): FacilityNodeType;
+export type FacilitySpaceUsage = "UNSPECIFIED" | "BOOKABLE" | "DEPARTMENT" | "OPERATIONAL";
+/** Normalize API/proto space_usage (number or string) to the string enum. */
+export declare function normalizeSpaceUsage(raw?: string | number | null): FacilitySpaceUsage;
+/** Default display label for a node type (Room, Bed, …). */
+export declare function facilityNodeTypeLabel(nodeType: string | unknown): string;
 //# sourceMappingURL=facility-helpers.d.ts.map

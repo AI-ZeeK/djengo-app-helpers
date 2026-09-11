@@ -10,6 +10,9 @@ exports.defaultFacilityAssetCapacity = defaultFacilityAssetCapacity;
 exports.formatFacilityAssetKindLabel = formatFacilityAssetKindLabel;
 exports.formatEnumOptionLabel = formatEnumOptionLabel;
 exports.enumSelectOptions = enumSelectOptions;
+exports.normalizeFacilityNodeType = normalizeFacilityNodeType;
+exports.normalizeSpaceUsage = normalizeSpaceUsage;
+exports.facilityNodeTypeLabel = facilityNodeTypeLabel;
 const facility_enums_1 = require("./facility-enums");
 /** Node types that receive a 1:1 occupancy asset profile. */
 exports.OCCUPIABLE_FACILITY_NODE_TYPES = [
@@ -126,5 +129,76 @@ function enumSelectOptions(enumObj) {
         value,
         label: formatEnumOptionLabel(value),
     }));
+}
+const FACILITY_NODE_TYPE_BY_NUMBER = {
+    0: facility_enums_1.FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED,
+    1: facility_enums_1.FACILITY_NODE_TYPE_ENUM.BLOCK,
+    2: facility_enums_1.FACILITY_NODE_TYPE_ENUM.BUILDING,
+    3: facility_enums_1.FACILITY_NODE_TYPE_ENUM.WARD,
+    4: facility_enums_1.FACILITY_NODE_TYPE_ENUM.UNIT,
+    5: facility_enums_1.FACILITY_NODE_TYPE_ENUM.ROOM,
+    6: facility_enums_1.FACILITY_NODE_TYPE_ENUM.BED,
+    7: facility_enums_1.FACILITY_NODE_TYPE_ENUM.FLOOR,
+    8: facility_enums_1.FACILITY_NODE_TYPE_ENUM.WING,
+    9: facility_enums_1.FACILITY_NODE_TYPE_ENUM.HOUSE,
+    10: facility_enums_1.FACILITY_NODE_TYPE_ENUM.TABLE,
+    11: facility_enums_1.FACILITY_NODE_TYPE_ENUM.ZONE,
+    12: facility_enums_1.FACILITY_NODE_TYPE_ENUM.SECTION,
+    13: facility_enums_1.FACILITY_NODE_TYPE_ENUM.SITE,
+    14: facility_enums_1.FACILITY_NODE_TYPE_ENUM.CHAIR,
+};
+const KNOWN_NODE_TYPES = new Set(Object.values(facility_enums_1.FACILITY_NODE_TYPE_ENUM));
+/** Normalize API/proto node type (number, "6", BED) to the string enum. */
+function normalizeFacilityNodeType(value) {
+    if (value === undefined || value === null || value === "") {
+        return facility_enums_1.FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED;
+    }
+    if (typeof value === "number" && Number.isFinite(value)) {
+        return (FACILITY_NODE_TYPE_BY_NUMBER[value] ??
+            facility_enums_1.FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED);
+    }
+    const raw = String(value).trim();
+    const asNum = Number(raw);
+    if (raw !== "" && !Number.isNaN(asNum) && String(asNum) === raw) {
+        return (FACILITY_NODE_TYPE_BY_NUMBER[asNum] ??
+            facility_enums_1.FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED);
+    }
+    const upper = raw.toUpperCase();
+    if (KNOWN_NODE_TYPES.has(upper))
+        return upper;
+    return facility_enums_1.FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED;
+}
+/** Normalize API/proto space_usage (number or string) to the string enum. */
+function normalizeSpaceUsage(raw) {
+    if (raw === undefined || raw === null || raw === "")
+        return "UNSPECIFIED";
+    if (typeof raw === "number") {
+        switch (raw) {
+            case 1:
+                return "BOOKABLE";
+            case 2:
+                return "DEPARTMENT";
+            case 3:
+                return "OPERATIONAL";
+            default:
+                return "UNSPECIFIED";
+        }
+    }
+    const u = String(raw).trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (u === "1" || u.includes("BOOKABLE"))
+        return "BOOKABLE";
+    if (u === "2" || u.includes("DEPARTMENT"))
+        return "DEPARTMENT";
+    if (u === "3" || u.includes("OPERATIONAL"))
+        return "OPERATIONAL";
+    return "UNSPECIFIED";
+}
+/** Default display label for a node type (Room, Bed, …). */
+function facilityNodeTypeLabel(nodeType) {
+    const key = normalizeFacilityNodeType(nodeType);
+    if (key === facility_enums_1.FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED) {
+        return "Location";
+    }
+    return formatEnumOptionLabel(key);
 }
 //# sourceMappingURL=facility-helpers.js.map

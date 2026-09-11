@@ -153,3 +153,88 @@ export function enumSelectOptions<E extends Record<string, string>>(
     label: formatEnumOptionLabel(value),
   }));
 }
+
+const FACILITY_NODE_TYPE_BY_NUMBER: Record<number, FacilityNodeType> = {
+  0: FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED,
+  1: FACILITY_NODE_TYPE_ENUM.BLOCK,
+  2: FACILITY_NODE_TYPE_ENUM.BUILDING,
+  3: FACILITY_NODE_TYPE_ENUM.WARD,
+  4: FACILITY_NODE_TYPE_ENUM.UNIT,
+  5: FACILITY_NODE_TYPE_ENUM.ROOM,
+  6: FACILITY_NODE_TYPE_ENUM.BED,
+  7: FACILITY_NODE_TYPE_ENUM.FLOOR,
+  8: FACILITY_NODE_TYPE_ENUM.WING,
+  9: FACILITY_NODE_TYPE_ENUM.HOUSE,
+  10: FACILITY_NODE_TYPE_ENUM.TABLE,
+  11: FACILITY_NODE_TYPE_ENUM.ZONE,
+  12: FACILITY_NODE_TYPE_ENUM.SECTION,
+  13: FACILITY_NODE_TYPE_ENUM.SITE,
+  14: FACILITY_NODE_TYPE_ENUM.CHAIR,
+};
+
+const KNOWN_NODE_TYPES = new Set<string>(
+  Object.values(FACILITY_NODE_TYPE_ENUM),
+);
+
+/** Normalize API/proto node type (number, "6", BED) to the string enum. */
+export function normalizeFacilityNodeType(value: unknown): FacilityNodeType {
+  if (value === undefined || value === null || value === "") {
+    return FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED;
+  }
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return (
+      FACILITY_NODE_TYPE_BY_NUMBER[value] ??
+      FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED
+    );
+  }
+  const raw = String(value).trim();
+  const asNum = Number(raw);
+  if (raw !== "" && !Number.isNaN(asNum) && String(asNum) === raw) {
+    return (
+      FACILITY_NODE_TYPE_BY_NUMBER[asNum] ??
+      FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED
+    );
+  }
+  const upper = raw.toUpperCase();
+  if (KNOWN_NODE_TYPES.has(upper)) return upper as FacilityNodeType;
+  return FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED;
+}
+
+export type FacilitySpaceUsage =
+  | "UNSPECIFIED"
+  | "BOOKABLE"
+  | "DEPARTMENT"
+  | "OPERATIONAL";
+
+/** Normalize API/proto space_usage (number or string) to the string enum. */
+export function normalizeSpaceUsage(
+  raw?: string | number | null,
+): FacilitySpaceUsage {
+  if (raw === undefined || raw === null || raw === "") return "UNSPECIFIED";
+  if (typeof raw === "number") {
+    switch (raw) {
+      case 1:
+        return "BOOKABLE";
+      case 2:
+        return "DEPARTMENT";
+      case 3:
+        return "OPERATIONAL";
+      default:
+        return "UNSPECIFIED";
+    }
+  }
+  const u = String(raw).trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (u === "1" || u.includes("BOOKABLE")) return "BOOKABLE";
+  if (u === "2" || u.includes("DEPARTMENT")) return "DEPARTMENT";
+  if (u === "3" || u.includes("OPERATIONAL")) return "OPERATIONAL";
+  return "UNSPECIFIED";
+}
+
+/** Default display label for a node type (Room, Bed, …). */
+export function facilityNodeTypeLabel(nodeType: string | unknown): string {
+  const key = normalizeFacilityNodeType(nodeType);
+  if (key === FACILITY_NODE_TYPE_ENUM.FACILITY_NODE_TYPE_UNSPECIFIED) {
+    return "Location";
+  }
+  return formatEnumOptionLabel(key);
+}

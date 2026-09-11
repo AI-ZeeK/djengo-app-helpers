@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SETTINGS_PAGE_COMPLETION_KEY = exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.PARTNER_TYPE = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = exports.CALENDAR_EVENT_TYPE_ENUM = exports.CALENDAR_RECURRENCE_PRESET_ENUM = void 0;
+exports.SETTINGS_PAGE_COMPLETION_KEY = exports.PermissionRestriction = exports.StaffPermission = exports.BusinessUserPermission = exports.UserStatus = exports.OtpType = exports.NotificationType = exports.EmailType = exports.FileEntityType = exports.AddressType = exports.OrganizationRole = exports.UserRole = exports.FILE_ENTITY_TYPE_ENUM = exports.ADDRESS_TYPE_ENUM = exports.PARTNER_TYPE = exports.TIMELINE_ENUM = exports.BASE_ORGANIZATION_ROLE_ENUM = exports.ROLES_ENUM = exports.BUSINESS_DAY_ENUM = exports.TABLE_LOCATION_TYPE_ENUM = exports.ROOM_LOCATION_TYPE_ENUM = exports.BED_SIZE_ENUM = exports.DAY_OF_WEEK_ENUM = exports.DEPARTMENT_TYPE_ENUM = exports.COMPANY_SERVICE_TYPE_ENUM = exports.CALENDAR_EVENT_TYPE_ENUM = exports.CALENDAR_RECURRENCE_PRESET_ENUM = void 0;
 /** Matches gRPC `CalendarRecurrencePreset` in events.proto (create/update calendar event). */
 var CALENDAR_RECURRENCE_PRESET_ENUM;
 (function (CALENDAR_RECURRENCE_PRESET_ENUM) {
@@ -60,6 +60,16 @@ var COMPANY_SERVICE_TYPE_ENUM;
     COMPANY_SERVICE_TYPE_ENUM["HOSPITAL"] = "HOSPITAL";
     COMPANY_SERVICE_TYPE_ENUM["GYM"] = "GYM";
 })(COMPANY_SERVICE_TYPE_ENUM || (exports.COMPANY_SERVICE_TYPE_ENUM = COMPANY_SERVICE_TYPE_ENUM = {}));
+/** Department category keys used when creating company departments. */
+var DEPARTMENT_TYPE_ENUM;
+(function (DEPARTMENT_TYPE_ENUM) {
+    DEPARTMENT_TYPE_ENUM["KITCHEN"] = "KITCHEN";
+    DEPARTMENT_TYPE_ENUM["RECEPTION"] = "RECEPTION";
+    DEPARTMENT_TYPE_ENUM["HR"] = "HR";
+    DEPARTMENT_TYPE_ENUM["LEGAL"] = "LEGAL";
+    DEPARTMENT_TYPE_ENUM["OPERATIONS"] = "OPERATIONS";
+    DEPARTMENT_TYPE_ENUM["CUSTOM"] = "CUSTOM";
+})(DEPARTMENT_TYPE_ENUM || (exports.DEPARTMENT_TYPE_ENUM = DEPARTMENT_TYPE_ENUM = {}));
 var DAY_OF_WEEK_ENUM;
 (function (DAY_OF_WEEK_ENUM) {
     DAY_OF_WEEK_ENUM["MONDAY"] = "MONDAY";
@@ -150,6 +160,7 @@ var PARTNER_TYPE;
 })(PARTNER_TYPE || (exports.PARTNER_TYPE = PARTNER_TYPE = {}));
 __exportStar(require("./facility-enums"), exports);
 __exportStar(require("./facility-helpers"), exports);
+__exportStar(require("./facility-occupancy-policy"), exports);
 __exportStar(require("./financial-enums"), exports);
 var ADDRESS_TYPE_ENUM;
 (function (ADDRESS_TYPE_ENUM) {
