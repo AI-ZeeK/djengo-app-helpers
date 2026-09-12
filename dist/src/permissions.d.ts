@@ -79,6 +79,8 @@ export declare enum PermissionName {
     MANAGE_STAFF_DOCUMENTS = "manage_staff_documents",
     VIEW_STAFF_POSITION_CHANGES = "view_staff_position_changes",
     MANAGE_STAFF_POSITION_CHANGES = "manage_staff_position_changes",
+    VIEW_SALARY_STRUCTURES = "view_salary_structures",
+    MANAGE_SALARY_STRUCTURES = "manage_salary_structures",
     VIEW_STAFF_COMPLAINTS = "view_staff_complaints",
     MANAGE_STAFF_COMPLAINTS = "manage_staff_complaints",
     VIEW_COMPANY_COMPLAINTS = "view_company_complaints",

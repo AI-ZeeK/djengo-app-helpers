@@ -91,6 +91,8 @@ var PermissionName;
     PermissionName["MANAGE_STAFF_DOCUMENTS"] = "manage_staff_documents";
     PermissionName["VIEW_STAFF_POSITION_CHANGES"] = "view_staff_position_changes";
     PermissionName["MANAGE_STAFF_POSITION_CHANGES"] = "manage_staff_position_changes";
+    PermissionName["VIEW_SALARY_STRUCTURES"] = "view_salary_structures";
+    PermissionName["MANAGE_SALARY_STRUCTURES"] = "manage_salary_structures";
     PermissionName["VIEW_STAFF_COMPLAINTS"] = "view_staff_complaints";
     PermissionName["MANAGE_STAFF_COMPLAINTS"] = "manage_staff_complaints";
     PermissionName["VIEW_COMPANY_COMPLAINTS"] = "view_company_complaints";
@@ -322,6 +324,8 @@ const GENERAL_PERMISSIONS = define("STAFF", [
     [P.MANAGE_STAFF_DOCUMENTS, 2, "Manage staff documents"],
     [P.VIEW_STAFF_POSITION_CHANGES, 1, "View staff position changes"],
     [P.MANAGE_STAFF_POSITION_CHANGES, 2, "Manage staff position changes"],
+    [P.VIEW_SALARY_STRUCTURES, 1, "View salary structures"],
+    [P.MANAGE_SALARY_STRUCTURES, 2, "Manage salary structures"],
     [P.VIEW_STAFF_COMPLAINTS, 1, "View staff complaints"],
     [P.MANAGE_STAFF_COMPLAINTS, 2, "Manage staff complaints"],
     [P.VIEW_COMPANY_COMPLAINTS, 1, "View company complaints"],
@@ -581,7 +585,7 @@ exports.PERMISSION_GROUPS = [
         P.VIEW_GUESTS,
         P.MANAGE_GUESTS,
     ]),
-    ...STAFF_AND_BU("HR records", "Contracts, performance, training, documents", "STAFF_MANAGEMENT", [
+    ...STAFF_AND_BU("HR records", "Contracts, performance, training, documents, salary structures", "STAFF_MANAGEMENT", [
         P.VIEW_COMPANY_CONTRACTS,
         P.MANAGE_COMPANY_CONTRACTS,
         P.VIEW_STAFF_PERFORMANCE,
@@ -594,6 +598,8 @@ exports.PERMISSION_GROUPS = [
         P.MANAGE_STAFF_DOCUMENTS,
         P.VIEW_STAFF_POSITION_CHANGES,
         P.MANAGE_STAFF_POSITION_CHANGES,
+        P.VIEW_SALARY_STRUCTURES,
+        P.MANAGE_SALARY_STRUCTURES,
     ]),
     ...STAFF_AND_BU("Support tickets", "Staff and company support tickets", "COMMUNICATION", [
         P.VIEW_STAFF_COMPLAINTS,
@@ -672,13 +678,15 @@ exports.PERMISSION_GROUPS = [
         P.MANAGE_REMITTANCES,
     ], 2),
     ...STAFF_AND_BU("Invoices", "Company invoices", "FINANCIALS", [P.VIEW_COMPANY_INVOICES, P.MANAGE_COMPANY_INVOICES], 2),
-    ...STAFF_AND_BU("Payroll", "Payroll runs, YTD, send and schedules", "FINANCIALS", [
+    ...STAFF_AND_BU("Payroll", "Payroll runs, YTD, send, schedules and salary structures", "FINANCIALS", [
         P.VIEW_PAYROLL,
         P.MANAGE_PAYROLL,
         P.APPROVE_PAYROLLS,
         P.SEND_PAYROLL,
         P.VIEW_PAYROLL_YTD,
         P.MANAGE_PAYROLL_SCHEDULES,
+        P.VIEW_SALARY_STRUCTURES,
+        P.MANAGE_SALARY_STRUCTURES,
     ], 2),
 ];
 /**
@@ -944,13 +952,11 @@ function approvalPermissionForEntity(entityTypeSlug) {
  * Chain configuration stays on view/manage_approval_chain; inbox is also
  * available to anyone who can sit on a chain step.
  */
-exports.APPROVAL_INBOX_PERMISSIONS = [
-    ...new Set([
-        P.VIEW_APPROVAL_CHAIN,
-        P.MANAGE_APPROVAL_CHAIN,
-        ...Object.values(exports.APPROVAL_ENTITY_PERMISSIONS),
-    ]),
-];
+exports.APPROVAL_INBOX_PERMISSIONS = Array.from(new Set([
+    P.VIEW_APPROVAL_CHAIN,
+    P.MANAGE_APPROVAL_CHAIN,
+    ...Object.values(exports.APPROVAL_ENTITY_PERMISSIONS),
+]));
 /**
  * Slugs of the two roles organization-service creates with every new
  * organization, each holding the whole catalog above.

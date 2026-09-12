@@ -89,6 +89,8 @@ export enum PermissionName {
   MANAGE_STAFF_DOCUMENTS = "manage_staff_documents",
   VIEW_STAFF_POSITION_CHANGES = "view_staff_position_changes",
   MANAGE_STAFF_POSITION_CHANGES = "manage_staff_position_changes",
+  VIEW_SALARY_STRUCTURES = "view_salary_structures",
+  MANAGE_SALARY_STRUCTURES = "manage_salary_structures",
   VIEW_STAFF_COMPLAINTS = "view_staff_complaints",
   MANAGE_STAFF_COMPLAINTS = "manage_staff_complaints",
   VIEW_COMPANY_COMPLAINTS = "view_company_complaints",
@@ -378,6 +380,8 @@ const GENERAL_PERMISSIONS: PermissionDef[] = define("STAFF", [
   [P.MANAGE_STAFF_DOCUMENTS, 2, "Manage staff documents"],
   [P.VIEW_STAFF_POSITION_CHANGES, 1, "View staff position changes"],
   [P.MANAGE_STAFF_POSITION_CHANGES, 2, "Manage staff position changes"],
+  [P.VIEW_SALARY_STRUCTURES, 1, "View salary structures"],
+  [P.MANAGE_SALARY_STRUCTURES, 2, "Manage salary structures"],
   [P.VIEW_STAFF_COMPLAINTS, 1, "View staff complaints"],
   [P.MANAGE_STAFF_COMPLAINTS, 2, "Manage staff complaints"],
   [P.VIEW_COMPANY_COMPLAINTS, 1, "View company complaints"],
@@ -667,7 +671,7 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
   ),
   ...STAFF_AND_BU(
     "HR records",
-    "Contracts, performance, training, documents",
+    "Contracts, performance, training, documents, salary structures",
     "STAFF_MANAGEMENT",
     [
       P.VIEW_COMPANY_CONTRACTS,
@@ -682,6 +686,8 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
       P.MANAGE_STAFF_DOCUMENTS,
       P.VIEW_STAFF_POSITION_CHANGES,
       P.MANAGE_STAFF_POSITION_CHANGES,
+      P.VIEW_SALARY_STRUCTURES,
+      P.MANAGE_SALARY_STRUCTURES,
     ],
   ),
   ...STAFF_AND_BU(
@@ -813,7 +819,7 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
   ),
   ...STAFF_AND_BU(
     "Payroll",
-    "Payroll runs, YTD, send and schedules",
+    "Payroll runs, YTD, send, schedules and salary structures",
     "FINANCIALS",
     [
       P.VIEW_PAYROLL,
@@ -822,6 +828,8 @@ export const PERMISSION_GROUPS: PermissionGroupDef[] = [
       P.SEND_PAYROLL,
       P.VIEW_PAYROLL_YTD,
       P.MANAGE_PAYROLL_SCHEDULES,
+      P.VIEW_SALARY_STRUCTURES,
+      P.MANAGE_SALARY_STRUCTURES,
     ],
     2,
   ),

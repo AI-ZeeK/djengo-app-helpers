@@ -118,6 +118,10 @@ public static class Permissions
     public const string ViewStaffPositionChanges = "view_staff_position_changes";
     /// <summary>Manage staff position changes</summary>
     public const string ManageStaffPositionChanges = "manage_staff_position_changes";
+    /// <summary>View salary structures</summary>
+    public const string ViewSalaryStructures = "view_salary_structures";
+    /// <summary>Manage salary structures</summary>
+    public const string ManageSalaryStructures = "manage_salary_structures";
     /// <summary>View staff complaints</summary>
     public const string ViewStaffComplaints = "view_staff_complaints";
     /// <summary>Manage staff complaints</summary>
@@ -291,6 +295,8 @@ public static class Permissions
         ManageStaffDocuments,
         ViewStaffPositionChanges,
         ManageStaffPositionChanges,
+        ViewSalaryStructures,
+        ManageSalaryStructures,
         ViewStaffComplaints,
         ManageStaffComplaints,
         ViewCompanyComplaints,
