@@ -21,6 +21,8 @@ export type FacilityOperationPolicy = {
   f_and_b_combined: boolean;
   lounge_shares_bar_staff: boolean;
   kitchen_shared: boolean;
+  /** Amenities (gym, spa, pool, …) share this site instead of a separate location. */
+  amenities_on_same_site?: boolean;
 };
 
 export type FacilityOccupancyAnchor = {
