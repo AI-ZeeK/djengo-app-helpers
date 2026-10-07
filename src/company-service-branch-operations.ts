@@ -1,6 +1,6 @@
 /**
  * Maps facility branch operation kinds to priced company-service business
- * type catalog names. Dining (restaurant/bar) and lodging are facility
+ * type catalog names. Dining (restaurant/bar/lounge) and lodging are facility
  * operations, not priced company services.
  */
 export const OPERATION_KIND_TO_BUSINESS_TYPE_NAME: Readonly<
@@ -15,7 +15,11 @@ export const OPERATION_KIND_TO_BUSINESS_TYPE_NAME: Readonly<
 export const PRICED_COMPANY_SERVICE_TYPE_NAMES = new Set(["SPA", "GYM"]);
 
 /** Facility operations — not priced company services. */
-export const FACILITY_OPERATION_TYPE_NAMES = new Set(["RESTAURANT", "HOTEL"]);
+export const FACILITY_OPERATION_TYPE_NAMES = new Set([
+  "RESTAURANT",
+  "HOTEL",
+  "LOUNGE",
+]);
 
 export function normalizeBranchOperationKinds(
   operations: { operation_kind?: string | null }[],

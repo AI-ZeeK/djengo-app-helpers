@@ -18,7 +18,7 @@ exports.OPERATION_KIND_TO_BUSINESS_TYPE_NAME = {
 /** Types that appear in Company Services (price plans). */
 exports.PRICED_COMPANY_SERVICE_TYPE_NAMES = new Set(["SPA", "GYM"]);
 /** Facility operations — not priced company services. */
-exports.FACILITY_OPERATION_TYPE_NAMES = new Set(["RESTAURANT", "HOTEL"]);
+exports.FACILITY_OPERATION_TYPE_NAMES = new Set(["RESTAURANT", "HOTEL", "LOUNGE"]);
 function normalizeBranchOperationKinds(operations) {
     return new Set(operations
         .map((o) => o.operation_kind?.trim().toLowerCase())
